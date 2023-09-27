@@ -1,5 +1,6 @@
 const leaguesModel = require('../models/leagues');
 
+//Sample Query: http://localhost:3000/leagues?id=39&season=2022
 const getLeagues = async (req, res) => {
     try {
         const data = await leaguesModel.getLeagues(req.query);
@@ -9,6 +10,7 @@ const getLeagues = async (req, res) => {
     }
 };
 
+//Sample Query: http://localhost:3000/leagues/seasons
 const getSeasons = async (req, res) => {
     try {
         const data = await leaguesModel.getSeasons(req.query);
