@@ -1,7 +1,9 @@
 const axios = require('axios');
 require("dotenv").config();
 
-const API_ENDPOINT = 'https://v3.football.api-sports.io/leagues';
+const { apiUrl } = require("./constants");
+
+const API_ENDPOINT = `${apiUrl}/leagues`;
 const API_KEY = process.env.key;  // Replace with your API key
 
 const getLeagues = async (params) => {
