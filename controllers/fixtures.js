@@ -20,40 +20,40 @@ const getFixtures = async (req, res) => {
     }
 };
 
-//Sample Query: http://localhost:3000/fixtures/headtohead?h2h=52-42 (faulty)
+//Sample Query: http://localhost:3000/fixtures/headtohead?h2h=52-42
 const getTeamHeadToHead = async (req, res) => {
     try {
-        const data = await fixturesModel.getFixtures(req.query);
+        const data = await fixturesModel.getTeamHeadToHead(req.query);
         res.json(data);
     } catch (error) {
         res.status(500).json({ error: 'Failed to fetch head to head' });
     }
 };
 
-//Sample Query: http://localhost:3000/fixtures/statistics?fixture=867947 (faulty)
+//Sample Query: http://localhost:3000/fixtures/statistics?fixture=867947
 const getTeamStatistics = async (req, res) => {
     try {
-        const data = await fixturesModel.getFixtures(req.query);
+        const data = await fixturesModel.getTeamStatistics(req.query);
         res.json(data);
     } catch (error) {
         res.status(500).json({ error: 'Failed to fetch statistics' });
     }
 };
 
-//Sample Query: http://localhost:3000/fixtures/statistics?fixture=867947 (faulty)
+//Sample Query: http://localhost:3000/fixtures/events?fixture=867947
 const getTeamEvents = async (req, res) => {
     try {
-        const data = await fixturesModel.getFixtures(req.query);
+        const data = await fixturesModel.getTeamEvents(req.query);
         res.json(data);
     } catch (error) {
         res.status(500).json({ error: 'Failed to fetch events' });
     }
 };
 
-//Sample Query: http://localhost:3000/fixtures/lineups?fixture=867947 (faulty)
+//Sample Query: http://localhost:3000/fixtures/lineups?fixture=867947
 const getTeamLineups = async (req, res) => {
     try {
-        const data = await fixturesModel.getFixtures(req.query);
+        const data = await fixturesModel.getTeamLineups(req.query);
         res.json(data);
     } catch (error) {
         res.status(500).json({ error: 'Failed to fetch lineups' });
@@ -63,7 +63,7 @@ const getTeamLineups = async (req, res) => {
 //Sample Query: http://localhost:3000/fixtures/players?fixture=867947
 const getTeamPlayersStatistics = async (req, res) => {
     try {
-        const data = await fixturesModel.getFixtures(req.query);
+        const data = await fixturesModel.getTeamPlayersStatistics(req.query);
         res.json(data);
     } catch (error) {
         res.status(500).json({ error: 'Failed to fetch player statistics' });
