@@ -1,65 +1,24 @@
-const axios = require('axios');
 require("dotenv").config();
 
 const { apiUrl } = require("./constants");
+const fetchData = require('../utils/fetchData');
 
 const API_ENDPOINT = `${apiUrl}/teams`;
-const API_KEY = process.env.key;  // Assuming you're using dotenv for environment variables
 
 const getTeams = async (params) => {
-    try {
-        const response = await axios.get(API_ENDPOINT, {
-            headers: {
-                'x-rapidapi-key': API_KEY
-            },
-            params: params
-        });
-        return response.data;
-    } catch (error) {
-        throw error;
-    }
+    return await fetchData(API_ENDPOINT, params);
 };
 
 const getTeamStatistics = async (params) => {
-    try {
-        const response = await axios.get(`${API_ENDPOINT}/statistics`, {
-            headers: {
-                'x-rapidapi-key': API_KEY
-            },
-            params: params
-        });
-        return response.data;
-    } catch (error) {
-        throw error;
-    }
+    return await fetchData(`${API_ENDPOINT}/statistics`, params);
 };
 
 const getTeamSeasons = async (params) => {
-    try {
-        const response = await axios.get(`${API_ENDPOINT}/seasons`, {
-            headers: {
-                'x-rapidapi-key': API_KEY
-            },
-            params: params
-        });
-        return response.data;
-    } catch (error) {
-        throw error;
-    }
+    return await fetchData(`${API_ENDPOINT}/seasons`, params);
 };
 
 const getTeamCountries = async (params) => {
-    try {
-        const response = await axios.get(`${API_ENDPOINT}/countries`, {
-            headers: {
-                'x-rapidapi-key': API_KEY
-            },
-            params: params
-        });
-        return response.data;
-    } catch (error) {
-        throw error;
-    }
+    return await fetchData(`${API_ENDPOINT}/countries`, params);
 };
 
 module.exports = {

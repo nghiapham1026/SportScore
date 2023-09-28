@@ -1,107 +1,36 @@
-const axios = require('axios');
 require("dotenv").config();
 
 const { apiUrl } = require("./constants");
+const fetchData = require('../utils/fetchData'); // Import the fetchData function
 
 const API_ENDPOINT = `${apiUrl}/fixtures`;
-const API_KEY = process.env.key;  // Replace with your API key
 
 const getRounds = async (params) => {
-    try {
-        const response = await axios.get(`${API_ENDPOINT}/rounds`, {
-            headers: {
-                'x-rapidapi-key': API_KEY
-            },
-            params: params
-        });
-        return response.data;
-    } catch (error) {
-        throw error;
-    }
+    return await fetchData(`${API_ENDPOINT}/rounds`, params);
 };
 
 const getFixtures = async (params) => {
-    try {
-        const response = await axios.get(API_ENDPOINT, {
-            headers: {
-                'x-rapidapi-key': API_KEY
-            },
-            params: params
-        });
-        return response.data;
-    } catch (error) {
-        throw error;
-    }
+    return await fetchData(API_ENDPOINT, params);
 };
 
 const getTeamHeadToHead = async (params) => {
-    try {
-        const response = await axios.get(`${API_ENDPOINT}/headtohead`, {
-            headers: {
-                'x-rapidapi-key': API_KEY
-            },
-            params: params
-        });
-        return response.data;
-    } catch (error) {
-        throw error;
-    }
+    return await fetchData(`${API_ENDPOINT}/headtohead`, params);
 };
 
 const getTeamStatistics = async (params) => {
-    try {
-        const response = await axios.get(`${API_ENDPOINT}/statistics`, {
-            headers: {
-                'x-rapidapi-key': API_KEY
-            },
-            params: params
-        });
-        return response.data;
-    } catch (error) {
-        throw error;
-    }
+    return await fetchData(`${API_ENDPOINT}/statistics`, params);
 };
 
 const getTeamEvents = async (params) => {
-    try {
-        const response = await axios.get(`${API_ENDPOINT}/events`, {
-            headers: {
-                'x-rapidapi-key': API_KEY
-            },
-            params: params
-        });
-        return response.data;
-    } catch (error) {
-        throw error;
-    }
+    return await fetchData(`${API_ENDPOINT}/events`, params);
 };
 
 const getTeamLineups = async (params) => {
-    try {
-        const response = await axios.get(`${API_ENDPOINT}/lineups`, {
-            headers: {
-                'x-rapidapi-key': API_KEY
-            },
-            params: params
-        });
-        return response.data;
-    } catch (error) {
-        throw error;
-    }
+    return await fetchData(`${API_ENDPOINT}/lineups`, params);
 };
 
 const getTeamPlayersStatistics = async (params) => {
-    try {
-        const response = await axios.get(`${API_ENDPOINT}/players`, {
-            headers: {
-                'x-rapidapi-key': API_KEY
-            },
-            params: params
-        });
-        return response.data;
-    } catch (error) {
-        throw error;
-    }
+    return await fetchData(`${API_ENDPOINT}/players`, params);
 };
 
 module.exports = {

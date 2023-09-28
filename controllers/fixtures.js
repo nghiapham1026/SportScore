@@ -1,74 +1,23 @@
 const fixturesModel = require('../models/fixtures');
+const genericHandler = require('../utils/genericHandler');
 
-//Sample Query: http://localhost:3000/fixtures/rounds?league=39&season=2023
-const getRounds = async (req, res) => {
-    try {
-        const data = await fixturesModel.getRounds(req.query);
-        res.json(data);
-    } catch (error) {
-        res.status(500).json({ error: 'Failed to fetch rounds' });
-    }
+const endpoints = {
+    rounds: fixturesModel.getRounds,
+    fixtures: fixturesModel.getFixtures,
+    headtohead: fixturesModel.getTeamHeadToHead,
+    statistics: fixturesModel.getTeamStatistics,
+    events: fixturesModel.getTeamEvents,
+    lineups: fixturesModel.getTeamLineups,
+    players: fixturesModel.getTeamPlayersStatistics
 };
 
-//Sample Query: http://localhost:3000/fixtures?league=39&season=2022
-const getFixtures = async (req, res) => {
-    try {
-        const data = await fixturesModel.getFixtures(req.query);
-        res.json(data);
-    } catch (error) {
-        res.status(500).json({ error: 'Failed to fetch fixtures' });
-    }
-};
-
-//Sample Query: http://localhost:3000/fixtures/headtohead?h2h=52-42
-const getTeamHeadToHead = async (req, res) => {
-    try {
-        const data = await fixturesModel.getTeamHeadToHead(req.query);
-        res.json(data);
-    } catch (error) {
-        res.status(500).json({ error: 'Failed to fetch head to head' });
-    }
-};
-
-//Sample Query: http://localhost:3000/fixtures/statistics?fixture=867947
-const getTeamStatistics = async (req, res) => {
-    try {
-        const data = await fixturesModel.getTeamStatistics(req.query);
-        res.json(data);
-    } catch (error) {
-        res.status(500).json({ error: 'Failed to fetch statistics' });
-    }
-};
-
-//Sample Query: http://localhost:3000/fixtures/events?fixture=867947
-const getTeamEvents = async (req, res) => {
-    try {
-        const data = await fixturesModel.getTeamEvents(req.query);
-        res.json(data);
-    } catch (error) {
-        res.status(500).json({ error: 'Failed to fetch events' });
-    }
-};
-
-//Sample Query: http://localhost:3000/fixtures/lineups?fixture=867947
-const getTeamLineups = async (req, res) => {
-    try {
-        const data = await fixturesModel.getTeamLineups(req.query);
-        res.json(data);
-    } catch (error) {
-        res.status(500).json({ error: 'Failed to fetch lineups' });
-    }
-};
-
-//Sample Query: http://localhost:3000/fixtures/players?fixture=867947
-const getTeamPlayersStatistics = async (req, res) => {
-    try {
-        const data = await fixturesModel.getTeamPlayersStatistics(req.query);
-        res.json(data);
-    } catch (error) {
-        res.status(500).json({ error: 'Failed to fetch player statistics' });
-    }
-};
+const getRounds = (req, res) => genericHandler(endpoints.rounds, req, res, 'Failed to fetch rounds');
+const getFixtures = (req, res) => genericHandler(endpoints.fixtures, req, res, 'Failed to fetch fixtures');
+const getTeamHeadToHead = (req, res) => genericHandler(endpoints.headtohead, req, res, 'Failed to fetch head to head');
+const getTeamStatistics = (req, res) => genericHandler(endpoints.statistics, req, res, 'Failed to fetch statistics');
+const getTeamEvents = (req, res) => genericHandler(endpoints.events, req, res, 'Failed to fetch events');
+const getTeamLineups = (req, res) => genericHandler(endpoints.lineups, req, res, 'Failed to fetch lineups');
+const getTeamPlayersStatistics = (req, res) => genericHandler(endpoints.players, req, res, 'Failed to fetch player statistics');
 
 module.exports = {
     getRounds,

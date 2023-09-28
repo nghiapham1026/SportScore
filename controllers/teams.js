@@ -1,46 +1,17 @@
 const teamsModel = require('../models/teams');
+const genericHandler = require('../utils/genericHandler');
 
-//Sample Query: http://localhost:3000/teams?league=39&season=2022
-const getTeams = async (req, res) => {
-    try {
-        const data = await teamsModel.getTeams(req.query);
-        res.json(data);
-    } catch (error) {
-        res.status(500).json({ error: 'Failed to fetch teams' });
-    }
+const endpoints = {
+    teams: teamsModel.getTeams,
+    teamStatistics: teamsModel.getTeamStatistics,
+    teamSeasons: teamsModel.getTeamSeasons,
+    teamCountries: teamsModel.getTeamCountries
 };
 
-
-//Sample Query: http://localhost:3000/teams/statistics?season=2022&team=33&league=39
-const getTeamStatistics = async (req, res) => {
-    try {
-        const data = await teamsModel.getTeamStatistics(req.query);
-        res.json(data);
-    } catch (error) {
-        res.status(500).json({ error: 'Failed to fetch team statistics' });
-    }
-};
-
-
-//Sample Query: http://localhost:3000/teams/seasons?team=33
-const getTeamSeasons = async (req, res) => {
-    try {
-        const data = await teamsModel.getTeamSeasons(req.query);
-        res.json(data);
-    } catch (error) {
-        res.status(500).json({ error: 'Failed to fetch team seasons' });
-    }
-};
-
-//Sample Query: http://localhost:3000/teams/countries
-const getTeamCountries = async (req, res) => {
-    try {
-        const data = await teamsModel.getTeamCountries(req.query);
-        res.json(data);
-    } catch (error) {
-        res.status(500).json({ error: 'Failed to fetch team countries' });
-    }
-};
+const getTeams = (req, res) => genericHandler(endpoints.teams, req, res, 'Failed to fetch teams');
+const getTeamStatistics = (req, res) => genericHandler(endpoints.teamStatistics, req, res, 'Failed to fetch team statistics');
+const getTeamSeasons = (req, res) => genericHandler(endpoints.teamSeasons, req, res, 'Failed to fetch team seasons');
+const getTeamCountries = (req, res) => genericHandler(endpoints.teamCountries, req, res, 'Failed to fetch team countries');
 
 module.exports = {
     getTeams,

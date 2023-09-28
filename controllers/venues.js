@@ -1,14 +1,11 @@
 const venuesModel = require('../models/venues');
+const genericHandler = require('../utils/genericHandler');
 
-//Sample Query: http://localhost:3000/venues?country=Spain
-const getVenues = async (req, res) => {
-    try {
-        const data = await venuesModel.getVenues(req.query);
-        res.json(data);
-    } catch (error) {
-        res.status(500).json({ error: 'Failed to fetch venues' });
-    }
+const endpoints = {
+    venues: venuesModel.getVenues
 };
+
+const getVenues = (req, res) => genericHandler(endpoints.venues, req, res, 'Failed to fetch venues');
 
 module.exports = {
     getVenues
