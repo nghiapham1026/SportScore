@@ -1,5 +1,5 @@
 const axios = require('axios');
-const cache = require('../cache'); // Import the caching module
+const cache = require('./cache'); // Import the caching module
 
 const API_KEY = process.env.key;
 
