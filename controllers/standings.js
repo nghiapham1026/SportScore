@@ -1,14 +1,11 @@
 const standingsModel = require('../models/standings');
+const genericHandler = require('../utils/genericHandler');
 
-//Sample Query: http://localhost:3000/standings?league=39&season=2022
-const getStandings = async (req, res) => {
-    try {
-        const data = await standingsModel.getStandings(req.query);
-        res.json(data);
-    } catch (error) {
-        res.status(500).json({ error: 'Failed to fetch standings' });
-    }
+const endpoints = {
+    standings: standingsModel.getStandings
 };
+
+const getStandings = (req, res) => genericHandler(endpoints.standings, req, res, 'Failed to fetch standings');
 
 module.exports = {
     getStandings

@@ -1,0 +1,38 @@
+--------------
+//Sample Query: http://localhost:3000/fixtures/rounds?league=39&season=2023
+
+//Sample Query: http://localhost:3000/fixtures?league=39&season=2022
+
+//Sample Query: http://localhost:3000/fixtures/headtohead?h2h=52-42
+
+//Sample Query: http://localhost:3000/fixtures/statistics?fixture=867947
+
+//Sample Query: http://localhost:3000/fixtures/events?fixture=867947
+
+//Sample Query: http://localhost:3000/fixtures/lineups?fixture=867947
+
+//Sample Query: http://localhost:3000/fixtures/players?fixture=867947
+
+
+--------------
+//Sample Query: http://localhost:3000/leagues?id=39&season=2022
+
+//Sample Query: http://localhost:3000/leagues/seasons
+
+
+--------------
+//Sample Query: http://localhost:3000/standings?league=39&season=2022
+
+
+--------------
+//Sample Query: http://localhost:3000/teams?league=39&season=2022
+
+//Sample Query: http://localhost:3000/teams/statistics?season=2022&team=33&league=39
+
+//Sample Query: http://localhost:3000/teams/seasons?team=33
+
+//Sample Query: http://localhost:3000/teams/countries
+
+
+--------------
+//Sample Query: http://localhost:3000/venues?country=Spain
