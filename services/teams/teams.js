@@ -1,8 +1,8 @@
 require("dotenv").config();
 
-const { apiUrl } = require("./constants");
-const fetchData = require('../utils/fetchData');
-const GroupedTeam = require('../models/teams'); // Import the modified schema
+const { apiUrl } = require("../constants");
+const fetchData = require('../../utils/fetchData');
+const GroupedTeam = require('../../models/teams/teams'); // Import the modified schema
 
 const API_ENDPOINT = `${apiUrl}/teams`;
 
