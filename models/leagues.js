@@ -41,7 +41,10 @@ const leagueSchema = new mongoose.Schema({
     country: countrySchema,
     seasons: [seasonSchema]
 },
-{ typeKey: '$type' }
-);
+{ typeKey: '$type' });
 
-module.exports = mongoose.model('League', leagueSchema);
+const groupedLeagueSchema = new mongoose.Schema({
+    allLeagues: [leagueSchema]
+});
+
+module.exports = mongoose.model('League', groupedLeagueSchema);

@@ -17,9 +17,15 @@ const getLeagues = async (params) => {
         seasons: item.seasons
     }));
 
+    // Create a single object to group all the leagues
+    const groupedData = {
+        allLeagues: leagueData
+    };
+
     // Save to MongoDB
     try {
-        await League.insertMany(leagueData);
+        const leagueGroup = new League(groupedData);
+        await leagueGroup.save();
     } catch (error) {
         console.error("Error inserting data into MongoDB:", error);
     }
