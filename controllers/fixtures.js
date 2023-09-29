@@ -1,4 +1,4 @@
-const fixturesModel = require('../models/fixtures');
+const fixturesModel = require('../services/fixtures');
 const genericHandler = require('../utils/genericHandler');
 
 const endpoints = {

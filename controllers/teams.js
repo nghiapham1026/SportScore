@@ -1,4 +1,4 @@
-const teamsModel = require('../models/teams');
+const teamsModel = require('../services/teams');
 const genericHandler = require('../utils/genericHandler');
 
 const endpoints = {

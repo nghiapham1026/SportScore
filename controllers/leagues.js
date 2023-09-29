@@ -1,4 +1,4 @@
-const leaguesModel = require('../models/leagues');
+const leaguesModel = require('../services/leagues');
 const genericHandler = require('../utils/genericHandler');
 
 const endpoints = {

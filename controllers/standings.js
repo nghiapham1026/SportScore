@@ -1,4 +1,4 @@
-const standingsModel = require('../models/standings');
+const standingsModel = require('../services/standings');
 const genericHandler = require('../utils/genericHandler');
 
 const endpoints = {
