@@ -11,8 +11,8 @@ const standingsRoutes = require('./routes/standings');
 const fixturesRoutes = require('./routes/fixtures');
 
 mongoose.connect(process.env.DB, { useNewUrlParser: true, useUnifiedTopology: true })
-    .then(() => console.log('Connected to MongoDB'))
-    .catch(err => console.error('Failed to connect to MongoDB', err));
+    .then(() => console.log('Connected to database'))
+    .catch(err => console.error('Failed to connect to database', err));
 
 app.use('/leagues', leaguesRoutes);
 app.use('/teams', teamsRoutes);
@@ -21,5 +21,5 @@ app.use('/standings', standingsRoutes);
 app.use('/fixtures', fixturesRoutes);
 
 app.listen(process.env.port, () => {
-    console.log(`Server is running on http://localhost:${process.env.port}`);
+    console.log(`Server is running on port ${process.env.port}`);
 });
