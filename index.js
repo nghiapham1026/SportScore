@@ -1,4 +1,5 @@
 const express = require('express');
+const mongoose = require('mongoose');
 require("dotenv").config();
 
 const app = express();
@@ -8,6 +9,10 @@ const teamsRoutes = require('./routes/teams');
 const venuesRoutes = require('./routes/venues');
 const standingsRoutes = require('./routes/standings');
 const fixturesRoutes = require('./routes/fixtures');
+
+mongoose.connect(process.env.DB, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => console.log('Connected to MongoDB'))
+    .catch(err => console.error('Failed to connect to MongoDB', err));
 
 app.use('/leagues', leaguesRoutes);
 app.use('/teams', teamsRoutes);

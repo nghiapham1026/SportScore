@@ -3,7 +3,7 @@ require("dotenv").config();
 
 const { apiUrl } = require("./constants");
 const fetchData = require('../utils/fetchData');
-const League = require('./leagueSchema'); // Import the schema
+const League = require('../models/leagues'); // Import the schema
 
 const API_ENDPOINT = `${apiUrl}/leagues`;
 
@@ -25,5 +25,4 @@ const getLeagues = async (params) => {
 
 module.exports = {
     getLeagues,
-    getSeasons
 };
