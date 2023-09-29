@@ -18,7 +18,11 @@ const getLeagues = async (params) => {
     }));
 
     // Save to MongoDB
-    await League.insertMany(leagueData);
+    try {
+        await League.insertMany(leagueData);
+    } catch (error) {
+        console.error("Error inserting data into MongoDB:", error);
+    }
 
     return leagueData;
 };
