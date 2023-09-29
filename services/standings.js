@@ -11,8 +11,15 @@ const getStandings = async (params) => {
     
     // Process the data into the schema
     const standingData = data.response.map(item => ({
-        league: item.league,
-        standings: item.standings
+        league: {
+            id: item.league.id,
+            name: item.league.name,
+            country: item.league.country,
+            logo: item.league.logo,
+            flag: item.league.flag,
+            season: item.league.season
+        },
+        standings: item.league.standings
     }));
 
     // Save to MongoDB
