@@ -37,7 +37,28 @@ const teamStatisticsSchema = new mongoose.Schema({
         logo: String
     },
     form: String,
-    fixtures: recordSchema,
+    fixtures: {
+        played: {
+          home: Number,
+          away: Number,
+          total: Number
+        },
+        wins: {
+          home: Number,
+          away: Number,
+          total: Number
+        },
+        draws: {
+          home: Number,
+          away: Number,
+          total: Number
+        },
+        loses: {
+          home: Number,
+          away: Number,
+          total: Number
+        }
+    },
     goals: {
         for: {
             total: recordSchema,

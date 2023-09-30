@@ -40,8 +40,6 @@ const getTeamStatistics = async (params) => {
         cards: item.cards
     }));
 
-    console.log(statisticsData);
-
     // Save to MongoDB
     try {
         await TeamStatistics.insertMany(statisticsData);
