@@ -3,6 +3,7 @@ const headToHeadModel = require('../services/fixtures/headtohead');
 const statisticsModel = require('../services/fixtures/statistics');
 const eventsModel = require('../services/fixtures/events');
 const lineupsModel = require('../services/fixtures/lineups');
+const playersModel = require('../services/fixtures/players');
 const genericHandler = require('../utils/genericHandler');
 
 const endpoints = {
@@ -12,7 +13,7 @@ const endpoints = {
     statistics: statisticsModel.getFixtureStatistics,
     events: eventsModel.getFixtureEvents,
     lineups: lineupsModel.getFixtureLineups,
-    players: fixturesModel.getTeamPlayersStatistics
+    players: playersModel.getFixturePlayers
 };
 
 const getRounds = (req, res) => genericHandler(endpoints.rounds, req, res, 'Failed to fetch rounds');
