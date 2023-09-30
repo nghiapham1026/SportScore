@@ -38,10 +38,6 @@ const getRounds = async (params) => {
     return await fetchData(`${API_ENDPOINT}/rounds`, params);
 };
 
-const getTeamStatistics = async (params) => {
-    return await fetchData(`${API_ENDPOINT}/statistics`, params);
-};
-
 const getTeamEvents = async (params) => {
     return await fetchData(`${API_ENDPOINT}/events`, params);
 };
@@ -57,7 +53,6 @@ const getTeamPlayersStatistics = async (params) => {
 module.exports = {
     getRounds,
     getFixtures,
-    getTeamStatistics,
     getTeamEvents,
     getTeamLineups,
     getTeamPlayersStatistics

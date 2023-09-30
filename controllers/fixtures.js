@@ -1,12 +1,13 @@
 const fixturesModel = require('../services/fixtures/fixtures');
 const headToHeadModel = require('../services/fixtures/headtohead');
+const statisticsModel = require('../services/fixtures/statistics');
 const genericHandler = require('../utils/genericHandler');
 
 const endpoints = {
     rounds: fixturesModel.getRounds,
     fixtures: fixturesModel.getFixtures,
     headtohead: headToHeadModel.getHeadToHeadFixtures,
-    statistics: fixturesModel.getTeamStatistics,
+    statistics: statisticsModel.getFixtureStatistics,
     events: fixturesModel.getTeamEvents,
     lineups: fixturesModel.getTeamLineups,
     players: fixturesModel.getTeamPlayersStatistics
