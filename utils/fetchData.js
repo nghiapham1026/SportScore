@@ -26,6 +26,7 @@ const fetchData = async (endpoint, params) => {
 
         return response.data;
     } catch (error) {
+        console.error("Error fetching data from API:", error.response ? error.response.data : error.message);
         throw error;
     }
 };

@@ -1,11 +1,10 @@
 const teamsModel = require('../services/teams/teams');
+const teamsStats = require('../services/teams/statistics');
 const genericHandler = require('../utils/genericHandler');
 
 const endpoints = {
     teams: teamsModel.getTeams,
-    teamStatistics: teamsModel.getTeamStatistics,
-    teamSeasons: teamsModel.getTeamSeasons,
-    teamCountries: teamsModel.getTeamCountries
+    teamStatistics: teamsStats.getTeamStatistics,
 };
 
 const getTeams = (req, res) => genericHandler(endpoints.teams, req, res, 'Failed to fetch teams');
