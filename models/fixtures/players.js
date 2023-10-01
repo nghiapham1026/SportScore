@@ -56,10 +56,14 @@ const statisticsSchema = new mongoose.Schema({
     }
 });
 
-const playerSchema = new mongoose.Schema({
+const playerDetailsSchema = new mongoose.Schema({
     id: Number,
     name: String,
-    photo: String,
+    photo: String
+});
+
+const playerSchema = new mongoose.Schema({
+    player: playerDetailsSchema,
     statistics: [statisticsSchema]
 });
 
