@@ -75,8 +75,10 @@ const teamSchema = new mongoose.Schema({
 });
 
 const fixturePlayersSchema = new mongoose.Schema({
-    team: teamSchema,
-    players: [playerSchema]
+    teams: [{
+        team: teamSchema,
+        players: [playerSchema]
+    }]
 });
 
 module.exports = mongoose.model('FixturePlayers', fixturePlayersSchema);
