@@ -1,14 +1,19 @@
-require("dotenv").config();
+const mongoose = require('mongoose');
 
-const { apiUrl } = require("./constants");
-const fetchData = require('../utils/fetchData');
+const venueSchema = new mongoose.Schema({
+    id: Number,
+    name: String,
+    address: String,
+    city: String,
+    country: String,
+    capacity: Number,
+    surface: String,
+    image: String
+});
 
-const API_ENDPOINT = `${apiUrl}/venues`;
+const groupedVenueSchema = new mongoose.Schema({
+    allVenues: [venueSchema]
+},
+{ typeKey: '$type' });
 
-const getVenues = async (params) => {
-    return await fetchData(API_ENDPOINT, params);
-};
-
-module.exports = {
-    getVenues
-};
+module.exports = mongoose.model('Venue', groupedVenueSchema);

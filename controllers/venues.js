@@ -1,4 +1,4 @@
-const venuesModel = require('../models/venues');
+const venuesModel = require('../services/venues');
 const genericHandler = require('../utils/genericHandler');
 
 const endpoints = {

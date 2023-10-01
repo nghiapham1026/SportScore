@@ -1,19 +1,50 @@
-require("dotenv").config();
+const mongoose = require('mongoose');
 
-const { apiUrl } = require("./constants");
-const fetchData = require('../utils/fetchData');
+const coverageSchema = new mongoose.Schema({
+    fixtures: {
+        events: Boolean,
+        lineups: Boolean,
+        statistics_fixtures: Boolean,
+        statistics_players: Boolean
+    },
+    standings: Boolean,
+    players: Boolean,
+    top_scorers: Boolean,
+    top_assists: Boolean,
+    top_cards: Boolean,
+    injuries: Boolean,
+    predictions: Boolean,
+    odds: Boolean
+});
 
-const API_ENDPOINT = `${apiUrl}/leagues`;
+const seasonSchema = new mongoose.Schema({
+    year: Number,
+    start: Date,
+    end: Date,
+    current: Boolean,
+    coverage: coverageSchema
+});
 
-const getLeagues = async (params) => {
-    return await fetchData(API_ENDPOINT, params);
-};
+const countrySchema = new mongoose.Schema({
+    name: String,
+    code: String,
+    flag: String
+});
 
-const getSeasons = async (params) => {
-    return await fetchData(`${API_ENDPOINT}/seasons`, params);
-};
+const leagueSchema = new mongoose.Schema({
+    league: {
+        id: Number,
+        name: String,
+        type: String,
+        logo: String
+    },
+    country: countrySchema,
+    seasons: [seasonSchema]
+},
+{ typeKey: '$type' });
 
-module.exports = {
-    getLeagues,
-    getSeasons
-};
+const groupedLeagueSchema = new mongoose.Schema({
+    allLeagues: [leagueSchema]
+});
+
+module.exports = mongoose.model('League', groupedLeagueSchema);

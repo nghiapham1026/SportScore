@@ -1,14 +1,50 @@
-require("dotenv").config();
+const mongoose = require('mongoose');
 
-const { apiUrl } = require("./constants");
-const fetchData = require('../utils/fetchData');
+const goalsSchema = new mongoose.Schema({
+    for: Number,
+    against: Number
+});
 
-const API_ENDPOINT = `${apiUrl}/standings`;
+const recordSchema = new mongoose.Schema({
+    played: Number,
+    win: Number,
+    draw: Number,
+    lose: Number,
+    goals: goalsSchema
+});
 
-const getStandings = async (params) => {
-    return await fetchData(API_ENDPOINT, params);
-};
+const teamSchema = new mongoose.Schema({
+    id: Number,
+    name: String,
+    logo: String
+});
 
-module.exports = {
-    getStandings
-};
+const standingSchema = new mongoose.Schema({
+    rank: Number,
+    team: teamSchema,
+    points: Number,
+    goalsDiff: Number,
+    group: String,
+    form: String,
+    status: String,
+    description: String,
+    all: recordSchema,
+    home: recordSchema,
+    away: recordSchema,
+    update: Date
+});
+
+const leagueStandingSchema = new mongoose.Schema({
+    league: {
+        id: Number,
+        name: String,
+        country: String,
+        logo: String,
+        flag: String,
+        season: Number
+    },
+    standings: [[standingSchema]] // Nested array as per the provided data
+},
+{ typeKey: '$type' });
+
+module.exports = mongoose.model('LeagueStanding', leagueStandingSchema);
