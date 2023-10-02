@@ -9,8 +9,11 @@ const API_ENDPOINT = `${apiUrl}/fixtures`;
 const getFixtures = async (params) => {
     const data = await fetchData(API_ENDPOINT, params);
     
-    // Process the data into the schema
-    const fixtureData = data.response.map(item => ({
+    // Filter data based on the league IDs
+    const filteredData = data.response.filter(item => [39, 107, 135, 78, 61, 2, 3, 848, 143, 45, 48, 528, 556, 81, 529, 531, 547, 137, 66].includes(item.league.id));
+    
+    // Process the filtered data into the schema
+    const fixtureData = filteredData.map(item => ({
         fixture: item.fixture,
         league: item.league,
         teams: item.teams,
