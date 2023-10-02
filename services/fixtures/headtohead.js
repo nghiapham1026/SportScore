@@ -1,6 +1,6 @@
 require("dotenv").config();
 
-const { apiUrl } = require("../constants");
+const { apiUrl } = require("../../utils/constants");
 const fetchData = require('../../utils/fetchData');
 const groupedHeadToHeadFixtureSchema = require('../../models/fixtures/headtohead'); // Import the new schema
 
