@@ -3,6 +3,6 @@ const router = express.Router();
 const leaguesController = require('../controllers/leagues');
 
 // Get the list of available leagues and cups
-router.get('/', leaguesController.getLeagues);
+router.get('/getLeagues', leaguesController.getLeagues);
 
 module.exports = router;

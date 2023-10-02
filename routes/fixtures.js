@@ -2,12 +2,12 @@ const express = require('express');
 const router = express.Router();
 const fixturesController = require('../controllers/fixtures');
 
-router.get('/rounds', fixturesController.getRounds);
-router.get('/', fixturesController.getFixtures);
-router.get('/headtohead', fixturesController.getTeamHeadToHead);
-router.get('/statistics', fixturesController.getTeamStatistics);
-router.get('/events', fixturesController.getTeamEvents);
-router.get('/lineups', fixturesController.getTeamLineups);
-router.get('/players', fixturesController.getTeamPlayersStatistics);
+router.get('/getFixtureRounds', fixturesController.getRounds);
+router.get('/getFixtures', fixturesController.getFixtures);
+router.get('/getFixtureHeadToHead', fixturesController.getTeamHeadToHead);
+router.get('/getMatchStatistics', fixturesController.getTeamStatistics);
+router.get('/getMatchEvents', fixturesController.getTeamEvents);
+router.get('/getMatchLineups', fixturesController.getTeamLineups);
+router.get('/getMatchPlayerStatistics', fixturesController.getTeamPlayersStatistics);
 
 module.exports = router;
