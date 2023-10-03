@@ -17,9 +17,14 @@ const getLeagues = async (params) => {
         seasons: item.seasons
     }));
 
+    // Filter the data for specific league IDs
+    const filteredLeagueData = leagueData.filter(item => 
+        [39, 107, 135, 78, 61, 2, 3, 848, 143, 45, 48, 528, 556, 81, 529, 531, 547, 137, 66].includes(item.league.id)
+    );
+
     // Create a single object to group all the leagues
     const groupedData = {
-        allLeagues: leagueData
+        allLeagues: filteredLeagueData
     };
 
     // Save to MongoDB
@@ -45,7 +50,7 @@ const getLeagues = async (params) => {
         console.error("Error inserting data into MongoDB:", error);
     }
 
-    return leagueData;
+    return filteredLeagueData;
 };
 
 module.exports = {
