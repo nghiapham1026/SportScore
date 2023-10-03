@@ -23,12 +23,27 @@ const getHeadToHeadFixtures = async (params) => {
         allHeadToHeadFixtures: headToHeadFixtureData
     };
 
-    // Save to MongoDB
+    // Check if data already exists in MongoDB
     try {
-        const headToHeadFixtureGroup = new groupedHeadToHeadFixtureSchema(groupedData);
-        await headToHeadFixtureGroup.save();
+        // Check for existing data using fixture.id as a unique identifier
+        const existingData = await groupedHeadToHeadFixtureSchema.findOne({
+            "allHeadToHeadFixtures.fixture.id": { $in: headToHeadFixtureData.map(f => f.fixture.id) }
+        });
+        
+        // If data does not exist, save to MongoDB
+        if (!existingData) {
+            const headToHeadFixtureGroup = new groupedHeadToHeadFixtureSchema(groupedData);
+            await headToHeadFixtureGroup.save();
+            console.log("Data saved successfully");
+        } else {
+            // Replace the existing data
+            await groupedHeadToHeadFixtureSchema.findOneAndReplace({
+                "allHeadToHeadFixtures.fixture.id": { $in: headToHeadFixtureData.map(f => f.fixture.id) }
+            }, groupedData);
+            console.log("Data already exists in the database. Existing data has been replaced with new data.");
+        }
     } catch (error) {
-        console.error("Error inserting data into MongoDB:", error);
+        console.error("Error interacting with MongoDB:", error);
     }
 
     return headToHeadFixtureData;

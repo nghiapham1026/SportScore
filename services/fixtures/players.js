@@ -24,10 +24,25 @@ const getFixturePlayers = async (params) => {
 
     // Save to MongoDB
     try {
-        const fixturePlayersEntry = new FixturePlayers(groupedData);
-        await fixturePlayersEntry.save();
+        // Check for existing data using team.id as a unique identifier
+        const existingData = await FixturePlayers.findOne({
+            "teams.team.id": { $in: groupedData.teams.map(t => t.team.id) }
+        });
+        
+        // If data does not exist, save to MongoDB
+        if (!existingData) {
+            const fixturePlayersEntry = new FixturePlayers(groupedData);
+            await fixturePlayersEntry.save();
+            console.log("Data saved successfully");
+        } else {
+            // Replace the existing data
+            await FixturePlayers.findOneAndReplace({
+                "teams.team.id": { $in: groupedData.teams.map(t => t.team.id) }
+            }, groupedData);
+            console.log("Data already exists in the database. Existing data has been replaced with new data.");
+        }
     } catch (error) {
-        console.error("Error inserting data into MongoDB:", error);
+        console.error("Error interacting with MongoDB:", error);
     }
 
     return groupedData;

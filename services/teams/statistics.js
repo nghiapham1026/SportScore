@@ -9,7 +9,7 @@ const API_ENDPOINT = `${apiUrl}/teams/statistics`;
 const transformScore = (score) => {
     const [scored, conceded] = score.split('-').map(Number);
     return { scored, conceded };
-  };
+};
 
 const getTeamStatistics = async (params) => {
     const data = await fetchData(API_ENDPOINT, params);
@@ -32,7 +32,7 @@ const getTeamStatistics = async (params) => {
               home: transformScore(item.biggest.loses.home),
               away: transformScore(item.biggest.loses.away)
             }
-          },
+        },
         clean_sheet: item.clean_sheet,
         failed_to_score: item.failed_to_score,
         penalty: item.penalty,
@@ -42,7 +42,26 @@ const getTeamStatistics = async (params) => {
 
     // Save to MongoDB
     try {
-        await TeamStatistics.insertMany(statisticsData);
+        for (const statData of statisticsData) {
+            // Check for existing data using team.id as a unique identifier
+            const existingData = await TeamStatistics.findOne({
+                "team.id": statData.team.id,
+                "league.id": statData.league.id
+            });
+            
+            // If data does not exist, save to MongoDB
+            if (!existingData) {
+                await TeamStatistics.create(statData);
+                console.log(`Data for team ${statData.team.name} saved successfully`);
+            } else {
+                // Replace the existing data
+                await TeamStatistics.findOneAndReplace({
+                    "team.id": statData.team.id,
+                    "league.id": statData.league.id
+                }, statData);
+                console.log(`Data for team ${statData.team.name} already exists in the database. Existing data has been replaced with new data.`);
+            }
+        }
     } catch (error) {
         console.error("Error inserting data into MongoDB:", error);
     }

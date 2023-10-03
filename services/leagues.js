@@ -24,8 +24,23 @@ const getLeagues = async (params) => {
 
     // Save to MongoDB
     try {
-        const leagueGroup = new League(groupedData);
-        await leagueGroup.save();
+        // Check for existing data using league.id as a unique identifier
+        const existingData = await League.findOne({
+            "allLeagues.league.id": { $in: groupedData.allLeagues.map(l => l.league.id) }
+        });
+        
+        // If data does not exist, save to MongoDB
+        if (!existingData) {
+            const leagueGroup = new League(groupedData);
+            await leagueGroup.save();
+            console.log("Data saved successfully");
+        } else {
+            // Replace the existing data
+            await League.findOneAndReplace({
+                "allLeagues.league.id": { $in: groupedData.allLeagues.map(l => l.league.id) }
+            }, groupedData);
+            console.log("Data already exists in the database. Existing data has been replaced with new data.");
+        }
     } catch (error) {
         console.error("Error inserting data into MongoDB:", error);
     }
