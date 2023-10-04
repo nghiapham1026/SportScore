@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const venueSchema = new mongoose.Schema({
-    id: Number,
+    venueId: Number,
     name: String,
     address: String,
     city: String,
