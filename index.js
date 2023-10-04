@@ -20,6 +20,6 @@ app.use('/venues', venuesRoutes);
 app.use('/standings', standingsRoutes);
 app.use('/fixtures', fixturesRoutes);
 
-app.listen(process.env.port, () => {
+app.listen(process.env.PORT || 3000, () => {
     console.log(`Server is running`);
 });
