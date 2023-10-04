@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 require("dotenv").config();
 
-const { apiUrl } = require("./constants");
+const { apiUrl } = require("../utils/constants");
 const fetchData = require('../utils/fetchData');
 const League = require('../models/leagues'); // Import the schema
 
@@ -17,20 +17,40 @@ const getLeagues = async (params) => {
         seasons: item.seasons
     }));
 
+    // Filter the data for specific league IDs
+    const filteredLeagueData = leagueData.filter(item => 
+        [39, 107, 135, 78, 61, 2, 3, 848, 143, 45, 48, 528, 556, 81, 529, 531, 547, 137, 66].includes(item.league.id)
+    );
+
     // Create a single object to group all the leagues
     const groupedData = {
-        allLeagues: leagueData
+        allLeagues: filteredLeagueData
     };
 
     // Save to MongoDB
     try {
-        const leagueGroup = new League(groupedData);
-        await leagueGroup.save();
+        // Check for existing data using league.id as a unique identifier
+        const existingData = await League.findOne({
+            "allLeagues.league.id": { $in: groupedData.allLeagues.map(l => l.league.id) }
+        });
+        
+        // If data does not exist, save to MongoDB
+        if (!existingData) {
+            const leagueGroup = new League(groupedData);
+            await leagueGroup.save();
+            console.log("Data saved successfully");
+        } else {
+            // Replace the existing data
+            await League.findOneAndReplace({
+                "allLeagues.league.id": { $in: groupedData.allLeagues.map(l => l.league.id) }
+            }, groupedData);
+            console.log("Data already exists in the database. Existing data has been replaced with new data.");
+        }
     } catch (error) {
         console.error("Error inserting data into MongoDB:", error);
     }
 
-    return leagueData;
+    return filteredLeagueData;
 };
 
 module.exports = {

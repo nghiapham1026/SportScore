@@ -1,6 +1,6 @@
 require("dotenv").config();
 
-const { apiUrl } = require("./constants");
+const { apiUrl } = require("../utils/constants");
 const fetchData = require('../utils/fetchData');
 const Venue = require('../models/venues'); // Import the schema
 
@@ -11,7 +11,7 @@ const getVenues = async (params) => {
     
     // Process the data into the schema
     const venueData = data.response.map(item => ({
-        id: item.id,
+        venueId: item.id,
         name: item.name,
         address: item.address,
         city: item.city,
@@ -21,15 +21,29 @@ const getVenues = async (params) => {
         image: item.image
     }));
 
-    // Create a single object to group all the venues
     const groupedData = {
         allVenues: venueData
     };
 
     // Save to MongoDB
     try {
-        const venueGroup = new Venue(groupedData);
-        await venueGroup.save();
+        // Check for existing data using venue id as a unique identifier
+        const existingData = await Venue.findOne({
+            "allVenues.venueId": { $in: groupedData.allVenues.map(l => l.venueId) }
+        });
+        
+        // If data does not exist, save to MongoDB
+        if (!existingData) {
+            const venues = new Venue(groupedData);
+            await venues.save();
+            console.log("Data saved successfully");
+        } else {
+            // Replace the existing data
+            await Venue.findOneAndReplace({
+                "allVenues.venueId": { $in: groupedData.allVenues.map(l => l.venueId) }
+            }, groupedData);
+            console.log("Data already exists in the database. Existing data has been replaced with new data.");
+        }
     } catch (error) {
         console.error("Error inserting data into MongoDB:", error);
     }

@@ -1,6 +1,6 @@
 require("dotenv").config();
 
-const { apiUrl } = require("../constants");
+const { apiUrl } = require("../../utils/constants");
 const fetchData = require('../../utils/fetchData');
 const GroupedFixtureLineups = require('../../models/fixtures/lineups'); // Import the new schema
 
@@ -25,10 +25,25 @@ const getFixtureLineups = async (params) => {
 
     // Save to MongoDB
     try {
-        const fixtureLineupsGroup = new GroupedFixtureLineups(groupedData);
-        await fixtureLineupsGroup.save();
+        // Check for existing data using team.id as a unique identifier
+        const existingData = await GroupedFixtureLineups.findOne({
+            "allFixtureLineups.team.id": { $in: fixtureLineupsData.map(f => f.team.id) }
+        });
+        
+        // If data does not exist, save to MongoDB
+        if (!existingData) {
+            const fixtureLineupsGroup = new GroupedFixtureLineups(groupedData);
+            await fixtureLineupsGroup.save();
+            console.log("Data saved successfully");
+        } else {
+            // Replace the existing data
+            await GroupedFixtureLineups.findOneAndReplace({
+                "allFixtureLineups.team.id": { $in: fixtureLineupsData.map(f => f.team.id) }
+            }, groupedData);
+            console.log("Data already exists in the database. Existing data has been replaced with new data.");
+        }
     } catch (error) {
-        console.error("Error inserting data into MongoDB:", error);
+        console.error("Error interacting with MongoDB:", error);
     }
 
     return fixtureLineupsData;

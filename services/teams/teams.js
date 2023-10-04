@@ -1,6 +1,6 @@
 require("dotenv").config();
 
-const { apiUrl } = require("../constants");
+const { apiUrl } = require("../../utils/constants");
 const fetchData = require('../../utils/fetchData');
 const GroupedTeam = require('../../models/teams/teams'); // Import the modified schema
 
@@ -22,8 +22,23 @@ const getTeams = async (params) => {
 
     // Save to MongoDB
     try {
-        const teamGroup = new GroupedTeam(groupedData);
-        await teamGroup.save();
+        // Check for existing data using team.id as a unique identifier
+        const existingData = await GroupedTeam.findOne({
+            "allTeams.team.id": { $in: groupedData.allTeams.map(t => t.team.id) }
+        });
+        
+        // If data does not exist, save to MongoDB
+        if (!existingData) {
+            const teamGroup = new GroupedTeam(groupedData);
+            await teamGroup.save();
+            console.log("Data saved successfully");
+        } else {
+            // Replace the existing data
+            await GroupedTeam.findOneAndReplace({
+                "allTeams.team.id": { $in: groupedData.allTeams.map(t => t.team.id) }
+            }, groupedData);
+            console.log("Data already exists in the database. Existing data has been replaced with new data.");
+        }
     } catch (error) {
         console.error("Error inserting data into MongoDB:", error);
     }

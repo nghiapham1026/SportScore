@@ -1,6 +1,6 @@
 require("dotenv").config();
 
-const { apiUrl } = require("../constants");
+const { apiUrl } = require("../../utils/constants");
 const fetchData = require('../../utils/fetchData');
 const GroupedFixtureEvents = require('../../models/fixtures/events'); // Import the new schema
 
@@ -25,12 +25,39 @@ const getFixtureEvents = async (params) => {
         allFixtureEvents: fixtureEventsData
     };
 
-    // Save to MongoDB
+    // Check if data already exists in MongoDB
     try {
-        const fixtureEventsGroup = new GroupedFixtureEvents(groupedData);
-        await fixtureEventsGroup.save();
+        // Check for existing data using time.elapsed, team.id, and player.id as unique identifiers
+        const existingData = await GroupedFixtureEvents.findOne({
+            "allFixtureEvents": {
+                $elemMatch: {
+                    "time.elapsed": { $in: fixtureEventsData.map(f => f.time.elapsed) },
+                    "team.id": { $in: fixtureEventsData.map(f => f.team.id) },
+                    "player.id": { $in: fixtureEventsData.map(f => f.player.id) }
+                }
+            }
+        });
+        
+        // If data does not exist, save to MongoDB
+        if (!existingData) {
+            const fixtureEventsGroup = new GroupedFixtureEvents(groupedData);
+            await fixtureEventsGroup.save();
+            console.log("Data saved successfully");
+        } else {
+            // Replace the existing data
+            await GroupedFixtureEvents.findOneAndReplace({
+                "allFixtureEvents": {
+                    $elemMatch: {
+                        "time.elapsed": { $in: fixtureEventsData.map(f => f.time.elapsed) },
+                        "team.id": { $in: fixtureEventsData.map(f => f.team.id) },
+                        "player.id": { $in: fixtureEventsData.map(f => f.player.id) }
+                    }
+                }
+            }, groupedData);
+            console.log("Data already exists in the database. Existing data has been replaced with new data.");
+        }
     } catch (error) {
-        console.error("Error inserting data into MongoDB:", error);
+        console.error("Error interacting with MongoDB:", error);
     }
 
     return fixtureEventsData;
