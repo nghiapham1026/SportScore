@@ -10,7 +10,7 @@ const getFixtures = async (params) => {
     const data = await fetchData(API_ENDPOINT, params);
     
     // Filter data based on the league IDs
-    const filteredData = data.response.filter(item => [39, 140, 135, 78, 61, 2, 3, 848, 143, 45, 48, 528, 556, 81, 529, 531, 547, 137, 66, 5, 4, 32, 253, 772, 257, 536, 16, 536, 307, 17, 1, 29, 30, 31, 32, 33, 34, 340].includes(item.league.id));
+    const filteredData = data.response.filter(item => [39, 140, 135, 78, 61, 2, 3, 848, 143, 45, 48, 528, 556, 81, 529, 531, 547, 137, 22, 37, 66, 5, 4, 32, 960, 253, 772, 257, 536, 16, 536, 307, 17, 1, 29, 30, 31, 32, 33, 34, 340].includes(item.league.id));
     
     // Process the filtered data into the schema
     const fixtureData = filteredData.map(item => ({
