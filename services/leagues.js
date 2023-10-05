@@ -19,19 +19,20 @@ const getLeagues = async (params) => {
 
     // Filter the data for specific league IDs
     const filteredLeagueData = leagueData.filter(item => 
-        [39, 107, 135, 78, 61, 2, 3, 848, 143, 45, 48, 528, 556, 81, 529, 531, 547, 137, 66].includes(item.league.id)
+        [39, 107, 135, 78, 61, 2, 3, 848, 143, 45, 48, 528, 556, 81, 529, 531, 547, 137, 66, 5, 4, 32, 866, 772, 257, 536, 16, 536, 307, 17, 1, 29, 30, 31, 32, 33, 34, 340].includes(item.league.id)
     );
 
-    // Create a single object to group all the leagues and include the query params
+    // Create a single object to group all the leagues
     const groupedData = {
-        queryParams: params,
         allLeagues: filteredLeagueData
     };
 
     // Save to MongoDB
     try {
-        // Check for existing data using queryParams as a unique identifier
-        const existingData = await League.findOne({ "queryParams": params });
+        // Check for existing data using league.id as a unique identifier
+        const existingData = await League.findOne({
+            "allLeagues.league.id": { $in: groupedData.allLeagues.map(l => l.league.id) }
+        });
         
         // If data does not exist, save to MongoDB
         if (!existingData) {
@@ -40,7 +41,9 @@ const getLeagues = async (params) => {
             console.log("Data saved successfully");
         } else {
             // Replace the existing data
-            await League.findOneAndReplace({ "queryParams": params }, groupedData);
+            await League.findOneAndReplace({
+                "allLeagues.league.id": { $in: groupedData.allLeagues.map(l => l.league.id) }
+            }, groupedData);
             console.log("Data already exists in the database. Existing data has been replaced with new data.");
         }
     } catch (error) {
@@ -51,5 +54,5 @@ const getLeagues = async (params) => {
 };
 
 module.exports = {
-    getLeagues
+    getLeagues,
 };

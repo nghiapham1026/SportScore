@@ -6,8 +6,17 @@ const Venue = require('../models/venues'); // Import the modified schema
 
 const API_ENDPOINT = `${apiUrl}/venues`;
 
+const convertValuesToLowercase = (obj) => {
+    const newObj = {};
+    for (const key in obj) {
+        newObj[key] = typeof obj[key] === 'string' ? obj[key].toLowerCase() : obj[key];
+    }
+    return newObj;
+};
+
 const getVenues = async (params) => {
-    const data = await fetchData(API_ENDPOINT, params);
+    const lowercasedParams = convertValuesToLowercase(params);
+    const data = await fetchData(API_ENDPOINT, lowercasedParams);
     
     // Process the data into the schema
     const venueData = data.response.map(item => ({
@@ -23,14 +32,14 @@ const getVenues = async (params) => {
 
     // Create a single object to group all the venues and include the query params
     const groupedData = {
-        queryParams: params,
+        queryParams: lowercasedParams,
         allVenues: venueData
     };
 
     // Save to MongoDB
     try {
         // Check for existing data using queryParams as a unique identifier
-        const existingData = await Venue.findOne({ "queryParams": params });
+        const existingData = await Venue.findOne({ "queryParams": lowercasedParams });
         
         // If data does not exist, save to MongoDB
         if (!existingData) {
@@ -38,7 +47,7 @@ const getVenues = async (params) => {
             console.log("Data saved successfully");
         } else {
             // Replace the existing data
-            await Venue.findOneAndReplace({ "queryParams": params }, groupedData);
+            await Venue.findOneAndReplace({ "queryParams": lowercasedParams }, groupedData);
             console.log("Data already exists in the database. Existing data has been replaced with new data.");
         }
     } catch (error) {
