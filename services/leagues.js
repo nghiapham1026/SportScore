@@ -19,7 +19,7 @@ const getLeagues = async (params) => {
 
     // Filter the data for specific league IDs
     const filteredLeagueData = leagueData.filter(item => 
-        [39, 107, 135, 78, 61, 2, 3, 848, 143, 45, 48, 528, 556, 81, 529, 531, 547, 137, 66, 5, 4, 32, 866, 772, 257, 536, 16, 536, 307, 17, 1, 29, 30, 31, 32, 33, 34, 340].includes(item.league.id)
+        [39, 140, 135, 78, 61, 2, 3, 848, 143, 45, 48, 528, 556, 81, 529, 531, 547, 137, 66, 5, 4, 32, 253, 772, 257, 536, 16, 536, 307, 17, 1, 29, 30, 31, 32, 33, 34, 340].includes(item.league.id)
     );
 
     // Create a single object to group all the leagues
