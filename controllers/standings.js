@@ -2,11 +2,12 @@ const standingsModel = require('../services/standings');
 const genericHandler = require('../utils/genericHandler');
 
 const endpoints = {
-    standings: standingsModel.getStandings
+  standings: standingsModel.getStandings,
 };
 
-const getStandings = (req, res) => genericHandler(endpoints.standings, req, res, 'Failed to fetch standings');
+const getStandings = (req, res) =>
+  genericHandler(endpoints.standings, req, res, 'Failed to fetch standings');
 
 module.exports = {
-    getStandings
+  getStandings,
 };
