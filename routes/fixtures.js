@@ -8,6 +8,9 @@ router.get('/getFixtureHeadToHead', fixturesController.getTeamHeadToHead);
 router.get('/getMatchStatistics', fixturesController.getTeamStatistics);
 router.get('/getMatchEvents', fixturesController.getTeamEvents);
 router.get('/getMatchLineups', fixturesController.getTeamLineups);
-router.get('/getMatchPlayerStatistics', fixturesController.getTeamPlayersStatistics);
+router.get(
+  '/getMatchPlayerStatistics',
+  fixturesController.getTeamPlayersStatistics
+);
 
 module.exports = router;

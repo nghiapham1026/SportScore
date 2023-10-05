@@ -1,32 +1,36 @@
 const mongoose = require('mongoose');
 
 const venueSchema = new mongoose.Schema({
-    id: Number,
-    name: String,
-    address: String,
-    city: String,
-    capacity: Number,
-    surface: String,
-    image: String
+  id: Number,
+  name: String,
+  address: String,
+  city: String,
+  capacity: Number,
+  surface: String,
+  image: String,
 });
 
 const individualTeamSchema = new mongoose.Schema({
-    id: Number,
-    name: String,
-    code: String,
-    country: String,
-    founded: Number,
-    national: Boolean,
-    logo: String
+  id: Number,
+  name: String,
+  code: String,
+  country: String,
+  founded: Number,
+  national: Boolean,
+  logo: String,
 });
 
-const groupedTeamsSchema = new mongoose.Schema({
+const groupedTeamsSchema = new mongoose.Schema(
+  {
     queryParams: mongoose.Schema.Types.Mixed,
-    allTeams: [{
+    allTeams: [
+      {
         team: individualTeamSchema,
-        venue: venueSchema
-    }]
-},
-{ typeKey: '$type' });
+        venue: venueSchema,
+      },
+    ],
+  },
+  { typeKey: '$type' }
+);
 
 module.exports = mongoose.model('GroupedTeams', groupedTeamsSchema);
