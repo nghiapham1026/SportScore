@@ -41,6 +41,7 @@ const lineupSchema = new mongoose.Schema({
 });
 
 const groupedFixtureLineupsSchema = new mongoose.Schema({
+    queryParams: mongoose.Schema.Types.Mixed,
     allFixtureLineups: [lineupSchema]
 });
 

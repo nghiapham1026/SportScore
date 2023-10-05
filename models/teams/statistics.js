@@ -23,6 +23,7 @@ const lineupSchema = new mongoose.Schema({
 });
 
 const teamStatisticsSchema = new mongoose.Schema({
+    queryParams: mongoose.Schema.Types.Mixed,
     league: {
         id: Number,
         name: String,

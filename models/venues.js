@@ -12,6 +12,7 @@ const venueSchema = new mongoose.Schema({
 });
 
 const groupedVenueSchema = new mongoose.Schema({
+    queryParams: mongoose.Schema.Types.Mixed,
     allVenues: [venueSchema]
 },
 { typeKey: '$type' });

@@ -28,6 +28,7 @@ const eventSchema = new mongoose.Schema({
 { typeKey: '$type' });
 
 const groupedFixtureEventsSchema = new mongoose.Schema({
+    queryParams: mongoose.Schema.Types.Mixed,
     allFixtureEvents: [eventSchema]
 },
 { typeKey: '$type' });

@@ -21,14 +21,15 @@ const getFixtures = async (params) => {
         score: item.score
     }));
 
-    // Create a single object to group all the fixtures
+    // Create a single object to group all the fixtures and include the query params
     const groupedData = {
+        queryParams: params,
         allFixtures: fixtureData
     };
 
     // Check if data already exists in MongoDB
     try {
-        const existingData = await GroupedFixture.findOne({ "allFixtures.fixture.id": { $in: fixtureData.map(f => f.fixture.id) } });
+        const existingData = await GroupedFixture.findOne({ "queryParams": params });
         
         // If data does not exist, save to MongoDB
         if (!existingData) {
@@ -37,7 +38,7 @@ const getFixtures = async (params) => {
             console.log("Data saved successfully");
         } else {
             // Replace the existing data
-            await GroupedFixture.findOneAndReplace({ "allFixtures.fixture.id": { $in: fixtureData.map(f => f.fixture.id) } }, groupedData);
+            await GroupedFixture.findOneAndReplace({ "queryParams": params }, groupedData);
             console.log("Data already exists in the database. Existing data has been replaced with new data.");
         }
     } catch (error) {

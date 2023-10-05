@@ -2,7 +2,7 @@ require("dotenv").config();
 
 const { apiUrl } = require("../utils/constants");
 const fetchData = require('../utils/fetchData');
-const LeagueStanding = require('../models/standings'); // Import the schema
+const LeagueStanding = require('../models/standings'); // Import the modified schema
 
 const API_ENDPOINT = `${apiUrl}/standings`;
 
@@ -22,34 +22,31 @@ const getStandings = async (params) => {
         standings: item.league.standings
     }));
 
+    // Create a single object to group all the standings and include the query params
+    const groupedData = {
+        queryParams: params,
+        ...standingData[0] // assuming standingData always has at least one item
+    };
+
     // Save to MongoDB
     try {
-        // Loop through each standing data
-        for (const standing of standingData) {
-            // Check for existing data using league.id and league.season as unique identifiers
-            const existingData = await LeagueStanding.findOne({
-                "league.id": standing.league.id,
-                "league.season": standing.league.season
-            });
-            
-            // If data does not exist, save to MongoDB
-            if (!existingData) {
-                await LeagueStanding.create(standing);
-                console.log(`Data saved successfully`);
-            } else {
-                // Replace the existing data
-                await LeagueStanding.findOneAndReplace({
-                    "league.id": standing.league.id,
-                    "league.season": standing.league.season
-                }, standing);
-                console.log(`Data already exists. Existing data has been replaced with new data.`);
-            }
+        // Check for existing data using queryParams as a unique identifier
+        const existingData = await LeagueStanding.findOne({ "queryParams": params });
+        
+        // If data does not exist, save to MongoDB
+        if (!existingData) {
+            await LeagueStanding.create(groupedData);
+            console.log("Data saved successfully");
+        } else {
+            // Replace the existing data
+            await LeagueStanding.findOneAndReplace({ "queryParams": params }, groupedData);
+            console.log("Data already exists in the database. Existing data has been replaced with new data.");
         }
     } catch (error) {
         console.error("Error inserting data into MongoDB:", error);
     }
 
-    return standingData;
+    return groupedData; // Return the grouped data
 };
 
 module.exports = {

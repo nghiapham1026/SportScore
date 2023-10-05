@@ -18,6 +18,7 @@ const getTeamStatistics = async (params) => {
 
     // Process the data into the schema
     const statisticsData = responseData.map(item => ({
+        queryParams: params,
         league: item.league,
         team: item.team,
         form: item.form,
@@ -43,11 +44,8 @@ const getTeamStatistics = async (params) => {
     // Save to MongoDB
     try {
         for (const statData of statisticsData) {
-            // Check for existing data using team.id as a unique identifier
-            const existingData = await TeamStatistics.findOne({
-                "team.id": statData.team.id,
-                "league.id": statData.league.id
-            });
+            // Check for existing data using queryParams as a unique identifier
+            const existingData = await TeamStatistics.findOne({ "queryParams": params });
             
             // If data does not exist, save to MongoDB
             if (!existingData) {
@@ -55,10 +53,7 @@ const getTeamStatistics = async (params) => {
                 console.log(`Data for team ${statData.team.name} saved successfully`);
             } else {
                 // Replace the existing data
-                await TeamStatistics.findOneAndReplace({
-                    "team.id": statData.team.id,
-                    "league.id": statData.league.id
-                }, statData);
+                await TeamStatistics.findOneAndReplace({ "queryParams": params }, statData);
                 console.log(`Data for team ${statData.team.name} already exists in the database. Existing data has been replaced with new data.`);
             }
         }

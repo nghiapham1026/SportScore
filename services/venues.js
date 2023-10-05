@@ -2,12 +2,21 @@ require("dotenv").config();
 
 const { apiUrl } = require("../utils/constants");
 const fetchData = require('../utils/fetchData');
-const Venue = require('../models/venues'); // Import the schema
+const Venue = require('../models/venues'); // Import the modified schema
 
 const API_ENDPOINT = `${apiUrl}/venues`;
 
+const convertValuesToLowercase = (obj) => {
+    const newObj = {};
+    for (const key in obj) {
+        newObj[key] = typeof obj[key] === 'string' ? obj[key].toLowerCase() : obj[key];
+    }
+    return newObj;
+};
+
 const getVenues = async (params) => {
-    const data = await fetchData(API_ENDPOINT, params);
+    const lowercasedParams = convertValuesToLowercase(params);
+    const data = await fetchData(API_ENDPOINT, lowercasedParams);
     
     // Process the data into the schema
     const venueData = data.response.map(item => ({
@@ -21,34 +30,31 @@ const getVenues = async (params) => {
         image: item.image
     }));
 
+    // Create a single object to group all the venues and include the query params
     const groupedData = {
+        queryParams: lowercasedParams,
         allVenues: venueData
     };
 
     // Save to MongoDB
     try {
-        // Check for existing data using venue id as a unique identifier
-        const existingData = await Venue.findOne({
-            "allVenues.venueId": { $in: groupedData.allVenues.map(l => l.venueId) }
-        });
+        // Check for existing data using queryParams as a unique identifier
+        const existingData = await Venue.findOne({ "queryParams": lowercasedParams });
         
         // If data does not exist, save to MongoDB
         if (!existingData) {
-            const venues = new Venue(groupedData);
-            await venues.save();
+            await Venue.create(groupedData);
             console.log("Data saved successfully");
         } else {
             // Replace the existing data
-            await Venue.findOneAndReplace({
-                "allVenues.venueId": { $in: groupedData.allVenues.map(l => l.venueId) }
-            }, groupedData);
+            await Venue.findOneAndReplace({ "queryParams": lowercasedParams }, groupedData);
             console.log("Data already exists in the database. Existing data has been replaced with new data.");
         }
     } catch (error) {
         console.error("Error inserting data into MongoDB:", error);
     }
 
-    return venueData;
+    return groupedData; // Return the grouped data
 };
 
 module.exports = {
