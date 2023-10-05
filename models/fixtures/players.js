@@ -75,6 +75,7 @@ const teamSchema = new mongoose.Schema({
 });
 
 const fixturePlayersSchema = new mongoose.Schema({
+    queryParams: mongoose.Schema.Types.Mixed,
     teams: [{
         team: teamSchema,
         players: [playerSchema]

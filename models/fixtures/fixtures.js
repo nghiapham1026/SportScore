@@ -66,6 +66,7 @@ const fixtureSchema = new mongoose.Schema({
 { typeKey: '$type' });
 
 const groupedFixtureSchema = new mongoose.Schema({
+    queryParams: mongoose.Schema.Types.Mixed,
     allFixtures: [fixtureSchema]
 },
 { typeKey: '$type' });

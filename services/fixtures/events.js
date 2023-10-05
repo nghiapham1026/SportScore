@@ -20,22 +20,17 @@ const getFixtureEvents = async (params) => {
         comments: item.comments
     }));
 
-    // Create a single object to group all the fixture events
+    // Create a single object to group all the fixture events and include the query params
     const groupedData = {
+        queryParams: params,
         allFixtureEvents: fixtureEventsData
     };
 
     // Check if data already exists in MongoDB
     try {
-        // Check for existing data using time.elapsed, team.id, and player.id as unique identifiers
+        // Check for existing data using the query params
         const existingData = await GroupedFixtureEvents.findOne({
-            "allFixtureEvents": {
-                $elemMatch: {
-                    "time.elapsed": { $in: fixtureEventsData.map(f => f.time.elapsed) },
-                    "team.id": { $in: fixtureEventsData.map(f => f.team.id) },
-                    "player.id": { $in: fixtureEventsData.map(f => f.player.id) }
-                }
-            }
+            "queryParams": params
         });
         
         // If data does not exist, save to MongoDB
@@ -46,13 +41,7 @@ const getFixtureEvents = async (params) => {
         } else {
             // Replace the existing data
             await GroupedFixtureEvents.findOneAndReplace({
-                "allFixtureEvents": {
-                    $elemMatch: {
-                        "time.elapsed": { $in: fixtureEventsData.map(f => f.time.elapsed) },
-                        "team.id": { $in: fixtureEventsData.map(f => f.team.id) },
-                        "player.id": { $in: fixtureEventsData.map(f => f.player.id) }
-                    }
-                }
+                "queryParams": params
             }, groupedData);
             console.log("Data already exists in the database. Existing data has been replaced with new data.");
         }

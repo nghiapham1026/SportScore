@@ -15,17 +15,16 @@ const getTeams = async (params) => {
         venue: item.venue
     }));
 
-    // Create a single object to group all the teams
+    // Create a single object to group all the teams and include the query params
     const groupedData = {
+        queryParams: params,
         allTeams: teamData
     };
 
     // Save to MongoDB
     try {
-        // Check for existing data using team.id as a unique identifier
-        const existingData = await GroupedTeam.findOne({
-            "allTeams.team.id": { $in: groupedData.allTeams.map(t => t.team.id) }
-        });
+        // Check for existing data using queryParams as a unique identifier
+        const existingData = await GroupedTeam.findOne({ "queryParams": params });
         
         // If data does not exist, save to MongoDB
         if (!existingData) {
@@ -34,9 +33,7 @@ const getTeams = async (params) => {
             console.log("Data saved successfully");
         } else {
             // Replace the existing data
-            await GroupedTeam.findOneAndReplace({
-                "allTeams.team.id": { $in: groupedData.allTeams.map(t => t.team.id) }
-            }, groupedData);
+            await GroupedTeam.findOneAndReplace({ "queryParams": params }, groupedData);
             console.log("Data already exists in the database. Existing data has been replaced with new data.");
         }
     } catch (error) {

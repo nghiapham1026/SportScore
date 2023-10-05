@@ -21,6 +21,7 @@ const individualTeamSchema = new mongoose.Schema({
 });
 
 const groupedTeamsSchema = new mongoose.Schema({
+    queryParams: mongoose.Schema.Types.Mixed,
     allTeams: [{
         team: individualTeamSchema,
         venue: venueSchema

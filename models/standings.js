@@ -35,6 +35,7 @@ const standingSchema = new mongoose.Schema({
 });
 
 const leagueStandingSchema = new mongoose.Schema({
+    queryParams: mongoose.Schema.Types.Mixed,
     league: {
         id: Number,
         name: String,

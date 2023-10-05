@@ -66,6 +66,7 @@ const headToHeadFixtureSchema = new mongoose.Schema({
 { typeKey: '$type' });
 
 const groupedHeadToHeadFixtureSchema = new mongoose.Schema({
+    queryParams: mongoose.Schema.Types.Mixed,
     allHeadToHeadFixtures: [headToHeadFixtureSchema]
 },
 { typeKey: '$type' });

@@ -2,7 +2,7 @@ require("dotenv").config();
 
 const { apiUrl } = require("../../utils/constants");
 const fetchData = require('../../utils/fetchData');
-const groupedHeadToHeadFixtureSchema = require('../../models/fixtures/headtohead'); // Import the new schema
+const GroupedHeadToHeadFixture = require('../../models/fixtures/headtohead'); // Import the schema
 
 const API_ENDPOINT = `${apiUrl}/fixtures/headtohead`;
 
@@ -18,28 +18,24 @@ const getHeadToHeadFixtures = async (params) => {
         score: item.score
     }));
 
-    // Create a single object to group all the head-to-head fixtures
+    // Create a single object to group all the head-to-head fixtures and include the query params
     const groupedData = {
+        queryParams: params,
         allHeadToHeadFixtures: headToHeadFixtureData
     };
 
     // Check if data already exists in MongoDB
     try {
-        // Check for existing data using fixture.id as a unique identifier
-        const existingData = await groupedHeadToHeadFixtureSchema.findOne({
-            "allHeadToHeadFixtures.fixture.id": { $in: headToHeadFixtureData.map(f => f.fixture.id) }
-        });
+        const existingData = await GroupedHeadToHeadFixture.findOne({ "queryParams": params });
         
         // If data does not exist, save to MongoDB
         if (!existingData) {
-            const headToHeadFixtureGroup = new groupedHeadToHeadFixtureSchema(groupedData);
+            const headToHeadFixtureGroup = new GroupedHeadToHeadFixture(groupedData);
             await headToHeadFixtureGroup.save();
             console.log("Data saved successfully");
         } else {
             // Replace the existing data
-            await groupedHeadToHeadFixtureSchema.findOneAndReplace({
-                "allHeadToHeadFixtures.fixture.id": { $in: headToHeadFixtureData.map(f => f.fixture.id) }
-            }, groupedData);
+            await GroupedHeadToHeadFixture.findOneAndReplace({ "queryParams": params }, groupedData);
             console.log("Data already exists in the database. Existing data has been replaced with new data.");
         }
     } catch (error) {

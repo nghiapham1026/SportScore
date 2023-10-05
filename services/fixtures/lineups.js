@@ -2,7 +2,7 @@ require("dotenv").config();
 
 const { apiUrl } = require("../../utils/constants");
 const fetchData = require('../../utils/fetchData');
-const GroupedFixtureLineups = require('../../models/fixtures/lineups'); // Import the new schema
+const GroupedFixtureLineups = require('../../models/fixtures/lineups'); // Import the schema
 
 const API_ENDPOINT = `${apiUrl}/fixtures/lineups`;
 
@@ -18,17 +18,15 @@ const getFixtureLineups = async (params) => {
         coach: item.coach
     }));
 
-    // Create a single object to group all the fixture lineups
+    // Create a single object to group all the fixture lineups and include the query params
     const groupedData = {
+        queryParams: params,
         allFixtureLineups: fixtureLineupsData
     };
 
     // Save to MongoDB
     try {
-        // Check for existing data using team.id as a unique identifier
-        const existingData = await GroupedFixtureLineups.findOne({
-            "allFixtureLineups.team.id": { $in: fixtureLineupsData.map(f => f.team.id) }
-        });
+        const existingData = await GroupedFixtureLineups.findOne({ "queryParams": params });
         
         // If data does not exist, save to MongoDB
         if (!existingData) {
@@ -37,9 +35,7 @@ const getFixtureLineups = async (params) => {
             console.log("Data saved successfully");
         } else {
             // Replace the existing data
-            await GroupedFixtureLineups.findOneAndReplace({
-                "allFixtureLineups.team.id": { $in: fixtureLineupsData.map(f => f.team.id) }
-            }, groupedData);
+            await GroupedFixtureLineups.findOneAndReplace({ "queryParams": params }, groupedData);
             console.log("Data already exists in the database. Existing data has been replaced with new data.");
         }
     } catch (error) {

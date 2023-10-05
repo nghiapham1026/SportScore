@@ -44,6 +44,7 @@ const leagueSchema = new mongoose.Schema({
 { typeKey: '$type' });
 
 const groupedLeagueSchema = new mongoose.Schema({
+    queryParams: mongoose.Schema.Types.Mixed,
     allLeagues: [leagueSchema]
 });
 
