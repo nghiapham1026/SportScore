@@ -6,13 +6,13 @@ const endpoints = {
   leagues: leaguesModel.getLeagues,
 };
 
+//http://localhost:3000/leagues/db/getLeagues
 const getLeagues = (req, res) =>
   genericHandler(endpoints.leagues, req, res, 'Failed to fetch leagues');
 
 const getLeaguesFromDb = async (req, res) => {
   try {
-    const queryParams = req.query; // Extract query parameters from the request
-    const leagues = await League.findOne({ queryParams });
+    const leagues = await League.findOne();
     
     if (!leagues) {
       return res.status(404).json({ message: 'No leagues found for the provided parameters' });

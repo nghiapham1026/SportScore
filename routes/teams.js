@@ -10,5 +10,6 @@ router.get('/getTeamSeasonStatistics', teamsController.getTeamStatistics);
 
 // New route to get teams from the database
 router.get('/db/getTeams', teamsController.getTeamsFromDb);
+router.get('/db/getStatistics', teamsController.getTeamStatisticsFromDb);
 
 module.exports = router;

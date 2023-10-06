@@ -9,6 +9,7 @@ const endpoints = {
 const getStandings = (req, res) =>
   genericHandler(endpoints.standings, req, res, 'Failed to fetch standings');
 
+//http://localhost:3000/standings/getStandings?league=39&season=2021
 const getStandingsFromDb = async (req, res) => {
   try {
     const queryParams = req.query; // Extract query parameters from the request

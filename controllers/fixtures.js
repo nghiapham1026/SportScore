@@ -49,6 +49,7 @@ const getTeamPlayersStatistics = (req, res) =>
     'Failed to fetch player statistics'
   );
 
+  //http://localhost:3000/fixtures/db/getHeadToHead?h2h=33-39
   const getHeadToHeadFromDb = async (req, res) => {
     try {
       const queryParams = req.query; // Extract query parameters from the request
@@ -65,6 +66,7 @@ const getTeamPlayersStatistics = (req, res) =>
     }
   };
 
+  //http://localhost:3000/fixtures/db/getFixtures?date=2023-10-05
   const getFixturesFromDb = async (req, res) => {
     try {
       const queryParams = req.query; // Extract query parameters from the request
@@ -81,6 +83,7 @@ const getTeamPlayersStatistics = (req, res) =>
     }
   };
 
+  //http://localhost:3000/fixtures/db/getStatistics?id=394
   const getStatisticsFromDb = async (req, res) => {
     try {
       const queryParams = req.query;
@@ -97,6 +100,7 @@ const getTeamPlayersStatistics = (req, res) =>
     }
   };
   
+  //http://localhost:3000/fixtures/db/getEvents?id=394
   const getEventsFromDb = async (req, res) => {
     try {
       const queryParams = req.query;
@@ -113,6 +117,7 @@ const getTeamPlayersStatistics = (req, res) =>
     }
   };
   
+  //http://localhost:3000/fixtures/db/getLineups?id=394
   const getLineupsFromDb = async (req, res) => {
     try {
       const queryParams = req.query;
@@ -129,6 +134,7 @@ const getTeamPlayersStatistics = (req, res) =>
     }
   };
   
+  //http://localhost:3000/fixtures/db/getPlayers?id=394
   const getPlayersFromDb = async (req, res) => {
     try {
       const queryParams = req.query;
