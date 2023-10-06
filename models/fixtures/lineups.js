@@ -45,7 +45,8 @@ const groupedFixtureLineupsSchema = new mongoose.Schema({
   allFixtureLineups: [lineupSchema],
 });
 
-module.exports = mongoose.model(
-  'GroupedFixtureLineups',
-  groupedFixtureLineupsSchema
-);
+const LineupsModel =
+  mongoose.models.GroupedFixtureLineups ||
+  mongoose.model('GroupedFixtureLineups', groupedFixtureLineupsSchema);
+
+module.exports = LineupsModel;

@@ -19,4 +19,7 @@ const groupedVenueSchema = new mongoose.Schema(
   { typeKey: '$type' }
 );
 
-module.exports = mongoose.model('Venue', groupedVenueSchema);
+const Venue =
+  mongoose.models.Venue || mongoose.model('Venue', groupedVenueSchema);
+
+module.exports = Venue;

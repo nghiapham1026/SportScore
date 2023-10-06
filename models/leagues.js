@@ -50,4 +50,7 @@ const groupedLeagueSchema = new mongoose.Schema({
   allLeagues: [leagueSchema],
 });
 
-module.exports = mongoose.model('League', groupedLeagueSchema);
+const League =
+  mongoose.models.League || mongoose.model('League', groupedLeagueSchema);
+
+module.exports = League;
