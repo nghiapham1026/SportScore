@@ -99,4 +99,6 @@ const teamStatisticsSchema = new mongoose.Schema(
   { typeKey: '$type' }
 );
 
-module.exports = mongoose.model('TeamStatistics', teamStatisticsSchema);
+const TeamStatistics = mongoose.models.TeamStatistics || mongoose.model('TeamStatistics', teamStatisticsSchema);
+
+module.exports = TeamStatistics;

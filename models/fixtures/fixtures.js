@@ -75,4 +75,6 @@ const groupedFixtureSchema = new mongoose.Schema(
   { typeKey: '$type' }
 );
 
-module.exports = mongoose.model('Fixture', groupedFixtureSchema);
+const GroupedFixture = mongoose.models.Fixture || mongoose.model('Fixture', groupedFixtureSchema);
+
+module.exports = GroupedFixture;

@@ -75,7 +75,9 @@ const groupedHeadToHeadFixtureSchema = new mongoose.Schema(
   { typeKey: '$type' }
 );
 
-module.exports = mongoose.model(
+const HeadToHeadModel = mongoose.models.groupedHeadToHeadFixture || mongoose.model(
   'GroupedHeadToHeadFixture',
   groupedHeadToHeadFixtureSchema
 );
+
+module.exports = HeadToHeadModel;

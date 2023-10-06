@@ -84,4 +84,6 @@ const fixturePlayersSchema = new mongoose.Schema({
   ],
 });
 
-module.exports = mongoose.model('FixturePlayers', fixturePlayersSchema);
+const playersModel = mongoose.models.FixturePlayers || mongoose.model('FixturePlayers', fixturePlayersSchema);
+
+module.exports = playersModel;

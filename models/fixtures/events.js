@@ -37,7 +37,9 @@ const groupedFixtureEventsSchema = new mongoose.Schema(
   { typeKey: '$type' }
 );
 
-module.exports = mongoose.model(
+const eventsModel = mongoose.models.GroupedFixtureEvents || mongoose.model(
   'GroupedFixtureEvents',
   groupedFixtureEventsSchema
 );
+
+module.exports = eventsModel;

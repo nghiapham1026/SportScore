@@ -4,6 +4,14 @@ const statisticsModel = require('../services/fixtures/statistics');
 const eventsModel = require('../services/fixtures/events');
 const lineupsModel = require('../services/fixtures/lineups');
 const playersModel = require('../services/fixtures/players');
+
+const GroupedFixture = require('../models/fixtures/fixtures');
+const HeadToHeadModel = require('../models/fixtures/headtohead');
+const StatisticsModel = require('../models/fixtures/statistics');
+const EventsModel = require('../models/fixtures/events');
+const LineupsModel = require('../models/fixtures/lineups');
+const PlayersModel = require('../models/fixtures/players');
+
 const genericHandler = require('../utils/genericHandler');
 
 const endpoints = {
@@ -41,12 +49,114 @@ const getTeamPlayersStatistics = (req, res) =>
     'Failed to fetch player statistics'
   );
 
-module.exports = {
-  getRounds,
-  getFixtures,
-  getTeamHeadToHead,
-  getTeamStatistics,
-  getTeamEvents,
-  getTeamLineups,
-  getTeamPlayersStatistics,
-};
+  const getHeadToHeadFromDb = async (req, res) => {
+    try {
+      const queryParams = req.query; // Extract query parameters from the request
+      const headToHeadData = await HeadToHeadModel.findOne({ queryParams });
+      
+      if (!headToHeadData) {
+        return res.status(404).json({ message: 'No head-to-head data found for the provided parameters' });
+      }
+  
+      res.status(200).json(headToHeadData);
+    } catch (error) {
+      console.error('Error fetching data from MongoDB:', error);
+      res.status(500).json({ message: 'Internal Server Error' });
+    }
+  };
+
+  const getFixturesFromDb = async (req, res) => {
+    try {
+      const queryParams = req.query; // Extract query parameters from the request
+      const fixtures = await GroupedFixture.findOne({ queryParams });
+      
+      if (!fixtures) {
+        return res.status(404).json({ message: 'No fixtures found for the provided parameters' });
+      }
+  
+      res.status(200).json(fixtures);
+    } catch (error) {
+      console.error('Error fetching data from MongoDB:', error);
+      res.status(500).json({ message: 'Internal Server Error' });
+    }
+  };
+
+  const getStatisticsFromDb = async (req, res) => {
+    try {
+      const queryParams = req.query;
+      const statisticsData = await StatisticsModel.findOne({ queryParams });
+      
+      if (!statisticsData) {
+        return res.status(404).json({ message: 'No statistics data found for the provided parameters' });
+      }
+  
+      res.status(200).json(statisticsData);
+    } catch (error) {
+      console.error('Error fetching data from MongoDB:', error);
+      res.status(500).json({ message: 'Internal Server Error' });
+    }
+  };
+  
+  const getEventsFromDb = async (req, res) => {
+    try {
+      const queryParams = req.query;
+      const eventsData = await EventsModel.findOne({ queryParams });
+      
+      if (!eventsData) {
+        return res.status(404).json({ message: 'No events data found for the provided parameters' });
+      }
+  
+      res.status(200).json(eventsData);
+    } catch (error) {
+      console.error('Error fetching data from MongoDB:', error);
+      res.status(500).json({ message: 'Internal Server Error' });
+    }
+  };
+  
+  const getLineupsFromDb = async (req, res) => {
+    try {
+      const queryParams = req.query;
+      const lineupsData = await LineupsModel.findOne({ queryParams });
+      
+      if (!lineupsData) {
+        return res.status(404).json({ message: 'No lineups data found for the provided parameters' });
+      }
+  
+      res.status(200).json(lineupsData);
+    } catch (error) {
+      console.error('Error fetching data from MongoDB:', error);
+      res.status(500).json({ message: 'Internal Server Error' });
+    }
+  };
+  
+  const getPlayersFromDb = async (req, res) => {
+    try {
+      const queryParams = req.query;
+      const playersData = await PlayersModel.findOne({ queryParams });
+      
+      if (!playersData) {
+        return res.status(404).json({ message: 'No players data found for the provided parameters' });
+      }
+  
+      res.status(200).json(playersData);
+    } catch (error) {
+      console.error('Error fetching data from MongoDB:', error);
+      res.status(500).json({ message: 'Internal Server Error' });
+    }
+  };
+  
+  module.exports = {
+    getRounds,
+    getFixtures,
+    getTeamHeadToHead,
+    getTeamStatistics,
+    getTeamEvents,
+    getTeamLineups,
+    getTeamPlayersStatistics,
+    getFixturesFromDb,
+    getHeadToHeadFromDb,
+    getStatisticsFromDb,
+    getEventsFromDb,
+    getLineupsFromDb,
+    getPlayersFromDb,
+  };
