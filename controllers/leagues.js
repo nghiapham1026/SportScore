@@ -13,9 +13,11 @@ const getLeagues = (req, res) =>
 const getLeaguesFromDb = async (req, res) => {
   try {
     const leagues = await League.findOne();
-    
+
     if (!leagues) {
-      return res.status(404).json({ message: 'No leagues found for the provided parameters' });
+      return res
+        .status(404)
+        .json({ message: 'No leagues found for the provided parameters' });
     }
 
     res.status(200).json(leagues);

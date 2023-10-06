@@ -33,6 +33,8 @@ const groupedTeamsSchema = new mongoose.Schema(
   { typeKey: '$type' }
 );
 
-const Team = mongoose.models.GroupedTeams || mongoose.model('GroupedTeams', groupedTeamsSchema);
+const Team =
+  mongoose.models.GroupedTeams ||
+  mongoose.model('GroupedTeams', groupedTeamsSchema);
 
 module.exports = Team;

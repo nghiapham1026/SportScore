@@ -14,9 +14,11 @@ const getVenuesFromDb = async (req, res) => {
   try {
     const queryParams = req.query; // Extract query parameters from the request
     const venues = await Venue.findOne({ queryParams });
-    
+
     if (!venues) {
-      return res.status(404).json({ message: 'No venues found for the provided parameters' });
+      return res
+        .status(404)
+        .json({ message: 'No venues found for the provided parameters' });
     }
 
     res.status(200).json(venues);

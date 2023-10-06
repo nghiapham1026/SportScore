@@ -50,6 +50,8 @@ const leagueStandingSchema = new mongoose.Schema(
   { typeKey: '$type' }
 );
 
-const Standing = mongoose.models.LeagueStanding || mongoose.model('LeagueStanding', leagueStandingSchema);
+const Standing =
+  mongoose.models.LeagueStanding ||
+  mongoose.model('LeagueStanding', leagueStandingSchema);
 
 module.exports = Standing;

@@ -14,9 +14,11 @@ const getStandingsFromDb = async (req, res) => {
   try {
     const queryParams = req.query; // Extract query parameters from the request
     const standings = await Standing.findOne({ queryParams });
-    
+
     if (!standings) {
-      return res.status(404).json({ message: 'No standings found for the provided parameters' });
+      return res
+        .status(404)
+        .json({ message: 'No standings found for the provided parameters' });
     }
 
     res.status(200).json(standings);

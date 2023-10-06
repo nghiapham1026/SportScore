@@ -25,9 +25,11 @@ const getTeamsFromDb = async (req, res) => {
   try {
     const queryParams = req.query; // Extract query parameters from the request
     const teams = await Team.findOne({ queryParams });
-    
+
     if (!teams) {
-      return res.status(404).json({ message: 'No teams found for the provided parameters' });
+      return res
+        .status(404)
+        .json({ message: 'No teams found for the provided parameters' });
     }
 
     res.status(200).json(teams);
@@ -42,9 +44,13 @@ const getTeamStatisticsFromDb = async (req, res) => {
   try {
     const queryParams = req.query; // Extract query parameters from the request
     const teamStatistics = await TeamStatistics.findOne({ queryParams });
-    
+
     if (!teamStatistics) {
-      return res.status(404).json({ message: 'No team statistics found for the provided parameters' });
+      return res
+        .status(404)
+        .json({
+          message: 'No team statistics found for the provided parameters',
+        });
     }
 
     res.status(200).json(teamStatistics);

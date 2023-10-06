@@ -27,9 +27,8 @@ const groupedFixtureStatisticsSchema = new mongoose.Schema(
   { typeKey: '$type' }
 );
 
-const statisticsModel = mongoose.models.GroupedFixtureStatistics || mongoose.model(
-  'GroupedFixtureStatistics',
-  groupedFixtureStatisticsSchema
-);
+const statisticsModel =
+  mongoose.models.GroupedFixtureStatistics ||
+  mongoose.model('GroupedFixtureStatistics', groupedFixtureStatisticsSchema);
 
 module.exports = statisticsModel;
