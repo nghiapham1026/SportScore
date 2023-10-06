@@ -11,7 +11,6 @@ const endpoints = {
 
 const getTeams = (req, res) =>
   genericHandler(endpoints.teams, req, res, 'Failed to fetch teams');
-
 const getTeamStatistics = (req, res) =>
   genericHandler(
     endpoints.teamStatistics,
@@ -20,41 +19,7 @@ const getTeamStatistics = (req, res) =>
     'Failed to fetch team statistics'
   );
 
-const getTeamsFromDb = async (req, res) => {
-  try {
-    const queryParams = req.query; // Extract query parameters from the request
-    const teams = await Team.findOne({ queryParams });
-    
-    if (!teams) {
-      return res.status(404).json({ message: 'No teams found for the provided parameters' });
-    }
-
-    res.status(200).json(teams);
-  } catch (error) {
-    console.error('Error fetching data from MongoDB:', error);
-    res.status(500).json({ message: 'Internal Server Error' });
-  }
-};
-
-const getTeamStatisticsFromDb = async (req, res) => {
-  try {
-    const queryParams = req.query; // Extract query parameters from the request
-    const teamStatistics = await TeamStatistics.findOne({ queryParams });
-    
-    if (!teamStatistics) {
-      return res.status(404).json({ message: 'No team statistics found for the provided parameters' });
-    }
-
-    res.status(200).json(teamStatistics);
-  } catch (error) {
-    console.error('Error fetching data from MongoDB:', error);
-    res.status(500).json({ message: 'Internal Server Error' });
-  }
-};
-
 module.exports = {
   getTeams,
   getTeamStatistics,
-  getTeamsFromDb,
-  getTeamStatisticsFromDb,
 };

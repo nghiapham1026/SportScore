@@ -9,7 +9,10 @@ router.get('/getFixtureHeadToHead', fixturesController.getTeamHeadToHead);
 router.get('/getMatchStatistics', fixturesController.getTeamStatistics);
 router.get('/getMatchEvents', fixturesController.getTeamEvents);
 router.get('/getMatchLineups', fixturesController.getTeamLineups);
-router.get('/getMatchPlayerStatistics', fixturesController.getTeamPlayersStatistics);
+router.get(
+  '/getMatchPlayerStatistics',
+  fixturesController.getTeamPlayersStatistics
+);
 
 // New routes for fetching data from the database
 router.get('/db/getFixtures', fixturesController.getFixturesFromDb);
