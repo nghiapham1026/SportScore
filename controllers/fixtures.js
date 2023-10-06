@@ -13,7 +13,7 @@ const LineupsModel = require('../models/fixtures/lineups');
 const PlayersModel = require('../models/fixtures/players');
 
 const genericHandler = require('../utils/genericHandler');
-const retrieveDataFromDb = require('./retrieveData');
+const retrieveDataFromDb = require('../utils/retrieveData');
 
 const endpoints = {
   rounds: fixturesModel.getRounds,
