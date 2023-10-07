@@ -9,6 +9,7 @@ const teamsRoutes = require('./routes/teams');
 const venuesRoutes = require('./routes/venues');
 const standingsRoutes = require('./routes/standings');
 const fixturesRoutes = require('./routes/fixtures');
+const playersRoutes = require('./routes/players');
 
 mongoose
   .connect(process.env.DB, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -20,6 +21,11 @@ app.use('/teams', teamsRoutes);
 app.use('/venues', venuesRoutes);
 app.use('/standings', standingsRoutes);
 app.use('/fixtures', fixturesRoutes);
+app.use('/players', playersRoutes);
+
+app.get("/", (_, res) => {
+    res.send("Hello World");
+});
 
 app.listen(process.env.PORT || 3000, () => {
   console.log(`Server is running`);
