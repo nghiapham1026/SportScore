@@ -1,7 +1,10 @@
 const teamsModel = require('../services/teams/teams');
 const teamsStats = require('../services/teams/statistics');
+
 const Team = require('../models/teams/teams'); // Import the schema
 const TeamStatistics = require('../models/teams/statistics'); // Import the schema
+
+const retrieveDataFromDb = require('../utils/retrieveData');
 const genericHandler = require('../utils/genericHandler');
 
 const endpoints = {
@@ -21,43 +24,25 @@ const getTeamStatistics = (req, res) =>
   );
 
 //http://localhost:3000/teams/getTeams?league=39&season=2021&id=33
-const getTeamsFromDb = async (req, res) => {
-  try {
-    const queryParams = req.query; // Extract query parameters from the request
-    const teams = await Team.findOne({ queryParams });
-
-    if (!teams) {
-      return res
-        .status(404)
-        .json({ message: 'No teams found for the provided parameters' });
-    }
-
-    res.status(200).json(teams);
-  } catch (error) {
-    console.error('Error fetching data from MongoDB:', error);
-    res.status(500).json({ message: 'Internal Server Error' });
-  }
+const getTeamsFromDb = (req, res) => {
+  const queryParams = req.query; // Extract query parameters from the request
+  retrieveDataFromDb(
+    Team,
+    queryParams,
+    res,
+    'No teams found for the provided parameters'
+  );
 };
 
 //http://localhost:3000/teams/db/getStatistics?league=39&season=2021&id=33
-const getTeamStatisticsFromDb = async (req, res) => {
-  try {
-    const queryParams = req.query; // Extract query parameters from the request
-    const teamStatistics = await TeamStatistics.findOne({ queryParams });
-
-    if (!teamStatistics) {
-      return res
-        .status(404)
-        .json({
-          message: 'No team statistics found for the provided parameters',
-        });
-    }
-
-    res.status(200).json(teamStatistics);
-  } catch (error) {
-    console.error('Error fetching data from MongoDB:', error);
-    res.status(500).json({ message: 'Internal Server Error' });
-  }
+const getTeamStatisticsFromDb = (req, res) => {
+  const queryParams = req.query; // Extract query parameters from the request
+  retrieveDataFromDb(
+    TeamStatistics,
+    queryParams,
+    res,
+    'No team statistics found for the provided parameters'
+  );
 };
 
 module.exports = {

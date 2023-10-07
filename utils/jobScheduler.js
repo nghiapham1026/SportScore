@@ -16,7 +16,7 @@ const fetchFixturesForToday = async () => {
       },
     });
 
-    console.log('Data fetched successfully:', response.data);
+    console.log('Data fetched successfully');
   } catch (error) {
     console.error('Error fetching data:', error);
   }
