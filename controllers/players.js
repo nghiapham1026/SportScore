@@ -3,7 +3,7 @@ const squadsModel = require('../services/players/squads');
 const scorersModel = require('../services/players/scorers');
 const assistsModel = require('../services/players/assists'); // Update path if needed
 
-const Assist = require('../models/players/assists'); 
+const Assist = require('../models/players/assists');
 const Scorer = require('../models/players/scorers');
 const Squad = require('../models/players/squads');
 const Player = require('../models/players/players');
@@ -37,25 +37,45 @@ const getTopAssists = (req, res) =>
 //http://localhost:3000/players/getSquads?team=39
 const getPlayersFromDb = (req, res) => {
   const queryParams = req.query;
-  retrieveDataFromDb(Player, queryParams, res, 'No players found for the provided parameters');
+  retrieveDataFromDb(
+    Player,
+    queryParams,
+    res,
+    'No players found for the provided parameters'
+  );
 };
 
 //http://localhost:3000/players/db/getSquads?team=39
 const getSquadsFromDb = (req, res) => {
-    const queryParams = req.query;
-    retrieveDataFromDb(Squad, queryParams, res, 'No squads found for the provided parameters');
+  const queryParams = req.query;
+  retrieveDataFromDb(
+    Squad,
+    queryParams,
+    res,
+    'No squads found for the provided parameters'
+  );
 };
 
 //http://localhost:3000/players/db/getTopScorers?league=39&season=2022
 const getTopScorersFromDb = (req, res) => {
-    const queryParams = req.query;
-    retrieveDataFromDb(Scorer, queryParams, res, 'No top scorers found for the provided parameters');
+  const queryParams = req.query;
+  retrieveDataFromDb(
+    Scorer,
+    queryParams,
+    res,
+    'No top scorers found for the provided parameters'
+  );
 };
 
 //http://localhost:3000/players/db/getTopAssists?league=39&season=2022
 const getTopAssistsFromDb = (req, res) => {
-    const queryParams = req.query;
-    retrieveDataFromDb(Assist, queryParams, res, 'No assists found for the provided parameters');
+  const queryParams = req.query;
+  retrieveDataFromDb(
+    Assist,
+    queryParams,
+    res,
+    'No assists found for the provided parameters'
+  );
 };
 
 module.exports = {
@@ -66,5 +86,5 @@ module.exports = {
   getPlayersFromDb,
   getSquadsFromDb,
   getTopScorersFromDb,
-  getTopAssistsFromDb
+  getTopAssistsFromDb,
 };

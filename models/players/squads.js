@@ -25,6 +25,7 @@ const groupedSquadSchema = new mongoose.Schema({
   allSquads: [squadSchema],
 });
 
-const Squad = mongoose.models.Squad || mongoose.model('Squad', groupedSquadSchema);
+const Squad =
+  mongoose.models.Squad || mongoose.model('Squad', groupedSquadSchema);
 
 module.exports = Squad;

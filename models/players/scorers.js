@@ -149,6 +149,7 @@ const groupedScorerSchema = new mongoose.Schema({
   topScorers: [scorerSchema],
 });
 
-const Scorer = mongoose.models.Scorer || mongoose.model('Scorer', groupedScorerSchema);
+const Scorer =
+  mongoose.models.Scorer || mongoose.model('Scorer', groupedScorerSchema);
 
 module.exports = Scorer;

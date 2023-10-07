@@ -123,12 +123,15 @@ const statisticsSchema = new mongoose.Schema({
 
 const groupedPlayerSchema = new mongoose.Schema({
   queryParams: mongoose.Schema.Types.Mixed,
-  allPlayers: [{
-    player: playerSchema,
-    statistics: [statisticsSchema],
-  }],
+  allPlayers: [
+    {
+      player: playerSchema,
+      statistics: [statisticsSchema],
+    },
+  ],
 });
 
-const Player = mongoose.models.Player || mongoose.model('Player', groupedPlayerSchema);
+const Player =
+  mongoose.models.Player || mongoose.model('Player', groupedPlayerSchema);
 
 module.exports = Player;

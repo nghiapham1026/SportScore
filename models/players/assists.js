@@ -140,6 +140,7 @@ const groupedAssistSchema = new mongoose.Schema({
 });
 
 // Model
-const Assist = mongoose.models.Assist || mongoose.model('Assist', groupedAssistSchema);
+const Assist =
+  mongoose.models.Assist || mongoose.model('Assist', groupedAssistSchema);
 
 module.exports = Assist;

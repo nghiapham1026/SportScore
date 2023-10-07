@@ -26,13 +26,23 @@ const getTeamStatistics = (req, res) =>
 //http://localhost:3000/teams/getTeams?league=39&season=2021&id=33
 const getTeamsFromDb = (req, res) => {
   const queryParams = req.query; // Extract query parameters from the request
-  retrieveDataFromDb(Team, queryParams, res, 'No teams found for the provided parameters');
+  retrieveDataFromDb(
+    Team,
+    queryParams,
+    res,
+    'No teams found for the provided parameters'
+  );
 };
 
 //http://localhost:3000/teams/db/getStatistics?league=39&season=2021&id=33
 const getTeamStatisticsFromDb = (req, res) => {
   const queryParams = req.query; // Extract query parameters from the request
-  retrieveDataFromDb(TeamStatistics, queryParams, res, 'No team statistics found for the provided parameters');
+  retrieveDataFromDb(
+    TeamStatistics,
+    queryParams,
+    res,
+    'No team statistics found for the provided parameters'
+  );
 };
 
 module.exports = {

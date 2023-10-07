@@ -14,7 +14,12 @@ const getStandings = (req, res) =>
 //http://localhost:3000/standings/getStandings?league=39&season=2021
 const getStandingsFromDb = (req, res) => {
   const queryParams = req.query; // Extract query parameters from the request
-  retrieveDataFromDb(Standing, queryParams, res, 'No standings found for the provided parameters');
+  retrieveDataFromDb(
+    Standing,
+    queryParams,
+    res,
+    'No standings found for the provided parameters'
+  );
 };
 
 module.exports = {

@@ -23,8 +23,10 @@ app.use('/standings', standingsRoutes);
 app.use('/fixtures', fixturesRoutes);
 app.use('/players', playersRoutes);
 
-app.get("/", (_, res) => {
-    res.send("Hello World");
+app.get('/', (_, res) => {
+  res.send(
+    'SportScore back-end server, view manual for a list of all endpoints'
+  );
 });
 
 app.listen(process.env.PORT || 3000, () => {

@@ -27,7 +27,9 @@ const getSquads = async (params) => {
       console.log('Data saved successfully');
     } else {
       await Squad.findOneAndReplace({ queryParams: params }, groupedData);
-      console.log('Data already exists in the database. Existing data has been replaced with new data.');
+      console.log(
+        'Data already exists in the database. Existing data has been replaced with new data.'
+      );
     }
   } catch (error) {
     console.error('Error inserting data into MongoDB:', error);

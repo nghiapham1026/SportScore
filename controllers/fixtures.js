@@ -51,22 +51,52 @@ const getTeamPlayersStatistics = (req, res) =>
   );
 
 const getHeadToHeadFromDb = (req, res) =>
-  retrieveDataFromDb(HeadToHeadModel, req.query, res, 'No head-to-head data found for the provided parameters');
+  retrieveDataFromDb(
+    HeadToHeadModel,
+    req.query,
+    res,
+    'No head-to-head data found for the provided parameters'
+  );
 
 const getFixturesFromDb = (req, res) =>
-  retrieveDataFromDb(GroupedFixture, req.query, res, 'No fixtures found for the provided parameters');
+  retrieveDataFromDb(
+    GroupedFixture,
+    req.query,
+    res,
+    'No fixtures found for the provided parameters'
+  );
 
 const getStatisticsFromDb = (req, res) =>
-  retrieveDataFromDb(StatisticsModel, req.query, res, 'No statistics data found for the provided parameters');
+  retrieveDataFromDb(
+    StatisticsModel,
+    req.query,
+    res,
+    'No statistics data found for the provided parameters'
+  );
 
 const getEventsFromDb = (req, res) =>
-  retrieveDataFromDb(EventsModel, req.query, res, 'No events data found for the provided parameters');
+  retrieveDataFromDb(
+    EventsModel,
+    req.query,
+    res,
+    'No events data found for the provided parameters'
+  );
 
 const getLineupsFromDb = (req, res) =>
-  retrieveDataFromDb(LineupsModel, req.query, res, 'No lineups data found for the provided parameters');
+  retrieveDataFromDb(
+    LineupsModel,
+    req.query,
+    res,
+    'No lineups data found for the provided parameters'
+  );
 
 const getPlayersFromDb = (req, res) =>
-  retrieveDataFromDb(PlayersModel, req.query, res, 'No players data found for the provided parameters');
+  retrieveDataFromDb(
+    PlayersModel,
+    req.query,
+    res,
+    'No players data found for the provided parameters'
+  );
 
 module.exports = {
   getRounds,

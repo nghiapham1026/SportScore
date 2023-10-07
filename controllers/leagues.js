@@ -14,7 +14,12 @@ const getLeagues = (req, res) =>
 
 const getLeaguesFromDb = (req, res) => {
   // No query parameters are needed for this function as per the original implementation
-  retrieveDataFromDb(League, {}, res, 'No leagues found for the provided parameters');
+  retrieveDataFromDb(
+    League,
+    {},
+    res,
+    'No leagues found for the provided parameters'
+  );
 };
 
 module.exports = {
