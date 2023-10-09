@@ -11,7 +11,7 @@ const endpoints = {
 const getVenues = (req, res) =>
   genericHandler(endpoints.venues, req, res, 'Failed to fetch venues');
 
-//http://localhost:3000/venues/getTeamVenues?city=manchester
+// http://localhost:3000/venues/getTeamVenues?city=manchester
 const getVenuesFromDb = (req, res) => {
   const queryParams = req.query; // Extract query parameters from the request
   retrieveDataFromDb(

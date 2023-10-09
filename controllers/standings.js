@@ -11,7 +11,7 @@ const endpoints = {
 const getStandings = (req, res) =>
   genericHandler(endpoints.standings, req, res, 'Failed to fetch standings');
 
-//http://localhost:3000/standings/getStandings?league=39&season=2021
+// http://localhost:3000/standings/getStandings?league=39&season=2021
 const getStandingsFromDb = (req, res) => {
   const queryParams = req.query; // Extract query parameters from the request
   retrieveDataFromDb(

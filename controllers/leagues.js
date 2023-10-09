@@ -8,7 +8,7 @@ const endpoints = {
   leagues: leaguesModel.getLeagues,
 };
 
-//http://localhost:3000/leagues/db/getLeagues
+// http://localhost:3000/leagues/db/getLeagues
 const getLeagues = (req, res) =>
   genericHandler(endpoints.leagues, req, res, 'Failed to fetch leagues');
 

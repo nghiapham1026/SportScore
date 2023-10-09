@@ -18,7 +18,7 @@ const fetchData = async (endpoint, params) => {
       headers: {
         'x-rapidapi-key': API_KEY,
       },
-      params: params,
+      params,
     });
 
     // Store the API response in cache

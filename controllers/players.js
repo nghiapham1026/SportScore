@@ -18,23 +18,23 @@ const endpoints = {
   assists: assistsModel.getAssists,
 };
 
-//http://localhost:3000/players/getPlayers?team=39&season=2022
+// http://localhost:3000/players/getPlayers?team=39&season=2022
 const getPlayers = (req, res) =>
   genericHandler(endpoints.players, req, res, 'Failed to fetch players');
 
-//http://localhost:3000/players/getSquads?team=39
+// http://localhost:3000/players/getSquads?team=39
 const getSquads = (req, res) =>
   genericHandler(endpoints.squads, req, res, 'Failed to fetch squads');
 
-//http://localhost:3000/players/getTopScorers?league=39&season=2022
+// http://localhost:3000/players/getTopScorers?league=39&season=2022
 const getTopScorers = (req, res) =>
   genericHandler(endpoints.scorers, req, res, 'Failed to fetch top scorers');
 
-//http://localhost:3000/players/getTopAssists?league=39&season=2022
+// http://localhost:3000/players/getTopAssists?league=39&season=2022
 const getTopAssists = (req, res) =>
   genericHandler(endpoints.assists, req, res, 'Failed to fetch assists');
 
-//http://localhost:3000/players/getSquads?team=39
+// http://localhost:3000/players/getSquads?team=39
 const getPlayersFromDb = (req, res) => {
   const queryParams = req.query;
   retrieveDataFromDb(
@@ -45,7 +45,7 @@ const getPlayersFromDb = (req, res) => {
   );
 };
 
-//http://localhost:3000/players/db/getSquads?team=39
+// http://localhost:3000/players/db/getSquads?team=39
 const getSquadsFromDb = (req, res) => {
   const queryParams = req.query;
   retrieveDataFromDb(
@@ -56,7 +56,7 @@ const getSquadsFromDb = (req, res) => {
   );
 };
 
-//http://localhost:3000/players/db/getTopScorers?league=39&season=2022
+// http://localhost:3000/players/db/getTopScorers?league=39&season=2022
 const getTopScorersFromDb = (req, res) => {
   const queryParams = req.query;
   retrieveDataFromDb(
@@ -67,7 +67,7 @@ const getTopScorersFromDb = (req, res) => {
   );
 };
 
-//http://localhost:3000/players/db/getTopAssists?league=39&season=2022
+// http://localhost:3000/players/db/getTopAssists?league=39&season=2022
 const getTopAssistsFromDb = (req, res) => {
   const queryParams = req.query;
   retrieveDataFromDb(

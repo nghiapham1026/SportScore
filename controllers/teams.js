@@ -23,7 +23,7 @@ const getTeamStatistics = (req, res) =>
     'Failed to fetch team statistics'
   );
 
-//http://localhost:3000/teams/getTeams?league=39&season=2021&id=33
+// http://localhost:3000/teams/getTeams?league=39&season=2021&id=33
 const getTeamsFromDb = (req, res) => {
   const queryParams = req.query; // Extract query parameters from the request
   retrieveDataFromDb(
@@ -34,7 +34,7 @@ const getTeamsFromDb = (req, res) => {
   );
 };
 
-//http://localhost:3000/teams/db/getStatistics?league=39&season=2021&id=33
+// http://localhost:3000/teams/db/getStatistics?league=39&season=2021&id=33
 const getTeamStatisticsFromDb = (req, res) => {
   const queryParams = req.query; // Extract query parameters from the request
   retrieveDataFromDb(
