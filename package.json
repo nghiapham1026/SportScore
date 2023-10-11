@@ -10,6 +10,9 @@
     "lint:fix": "eslint . --fix",
     "format": "prettier --write \"**/*.{js,jsx,json,md}\""
   },
+  "engines": {
+    "node": "20.6.0"
+  },
   "author": "",
   "license": "ISC",
   "dependencies": {
