@@ -12,8 +12,8 @@ const endpoints = {
 const getLeagues = (req, res) =>
   genericHandler(endpoints.leagues, req, res, 'Failed to fetch leagues');
 
-// http://localhost:3000/leagues/db/getLeagues (faulty)
-const getLeaguesFromDb = (req, res) => {
+// http://localhost:3000/leagues/db/getLeagues
+const getLeaguesFromDb = (_, res) => {
   // No query parameters are needed for this function as per the original implementation
   retrieveDataFromDb(
     League,

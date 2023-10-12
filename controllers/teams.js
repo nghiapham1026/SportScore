@@ -16,7 +16,7 @@ const endpoints = {
 const getTeams = (req, res) =>
   genericHandler(endpoints.teams, req, res, 'Failed to fetch teams');
 
-// http://localhost:3000/teams/getTeamSeasonStatistics?league=39&season=2021&id=33 (faulty)
+// http://localhost:3000/teams/getTeamSeasonStatistics?league=39&season=2021&team=33
 const getTeamStatistics = (req, res) =>
   genericHandler(
     endpoints.teamStatistics,
@@ -36,7 +36,7 @@ const getTeamsFromDb = (req, res) => {
   );
 };
 
-// http://localhost:3000/teams/db/getStatistics?league=39&season=2021&id=33 (faulty)
+// http://localhost:3000/teams/db/getStatistics?league=39&season=2021&team=39
 const getTeamStatisticsFromDb = (req, res) => {
   const queryParams = req.query; // Extract query parameters from the request
   retrieveDataFromDb(

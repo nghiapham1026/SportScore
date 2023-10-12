@@ -33,7 +33,7 @@ const getRounds = (req, res) =>
 const getFixtures = (req, res) =>
   genericHandler(endpoints.fixtures, req, res, 'Failed to fetch fixtures');
 
-// http://localhost:3000/fixtures/getFixtureHeadToHead?id=33-39 (faulty)
+// http://localhost:3000/fixtures/getFixtureHeadToHead?h2h=33-39
 const getTeamHeadToHead = (req, res) =>
   genericHandler(
     endpoints.headtohead,
@@ -63,7 +63,7 @@ const getTeamPlayersStatistics = (req, res) =>
     'Failed to fetch player statistics'
   );
 
-// http://localhost:3000/fixtures/db/getHeadToHead?id=33-39 (faulty)
+// http://localhost:3000/fixtures/db/getHeadToHead?h2h=33-39
 const getHeadToHeadFromDb = (req, res) =>
   retrieveDataFromDb(
     HeadToHeadModel,
