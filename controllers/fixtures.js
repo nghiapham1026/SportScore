@@ -25,10 +25,15 @@ const endpoints = {
   players: playersModel.getFixturePlayers,
 };
 
+// http://localhost:3000/fixtures/getFixtureRounds?league=39&season=2022
 const getRounds = (req, res) =>
   genericHandler(endpoints.rounds, req, res, 'Failed to fetch rounds');
+
+// http://localhost:3000/fixtures/getFixtures?date=2023-10-05
 const getFixtures = (req, res) =>
   genericHandler(endpoints.fixtures, req, res, 'Failed to fetch fixtures');
+
+// http://localhost:3000/fixtures/getFixtureHeadToHead?id=33-39 (faulty)
 const getTeamHeadToHead = (req, res) =>
   genericHandler(
     endpoints.headtohead,
@@ -36,12 +41,20 @@ const getTeamHeadToHead = (req, res) =>
     res,
     'Failed to fetch head to head'
   );
+
+// http://localhost:3000/fixtures/getMatchStatistics?fixture=394
 const getTeamStatistics = (req, res) =>
   genericHandler(endpoints.statistics, req, res, 'Failed to fetch statistics');
+
+// http://localhost:3000/fixtures/getMatchEvents?fixture=394
 const getTeamEvents = (req, res) =>
   genericHandler(endpoints.events, req, res, 'Failed to fetch events');
+
+// http://localhost:3000/fixtures/getMatchLineups?fixture=394
 const getTeamLineups = (req, res) =>
   genericHandler(endpoints.lineups, req, res, 'Failed to fetch lineups');
+
+// http://localhost:3000/fixtures/getMatchPlayerStatistics?fixture=394
 const getTeamPlayersStatistics = (req, res) =>
   genericHandler(
     endpoints.players,
@@ -50,6 +63,7 @@ const getTeamPlayersStatistics = (req, res) =>
     'Failed to fetch player statistics'
   );
 
+// http://localhost:3000/fixtures/db/getHeadToHead?id=33-39 (faulty)
 const getHeadToHeadFromDb = (req, res) =>
   retrieveDataFromDb(
     HeadToHeadModel,
@@ -58,6 +72,7 @@ const getHeadToHeadFromDb = (req, res) =>
     'No head-to-head data found for the provided parameters'
   );
 
+// http://localhost:3000/fixtures/db/getFixtures?league=39&season=2022
 const getFixturesFromDb = (req, res) =>
   retrieveDataFromDb(
     GroupedFixture,
@@ -66,6 +81,7 @@ const getFixturesFromDb = (req, res) =>
     'No fixtures found for the provided parameters'
   );
 
+// http://localhost:3000/fixtures/db/getStatistics?fixture=394
 const getStatisticsFromDb = (req, res) =>
   retrieveDataFromDb(
     StatisticsModel,
@@ -74,6 +90,7 @@ const getStatisticsFromDb = (req, res) =>
     'No statistics data found for the provided parameters'
   );
 
+// http://localhost:3000/fixtures/db/getEvents?fixture=394
 const getEventsFromDb = (req, res) =>
   retrieveDataFromDb(
     EventsModel,
@@ -82,6 +99,7 @@ const getEventsFromDb = (req, res) =>
     'No events data found for the provided parameters'
   );
 
+// http://localhost:3000/fixtures/db/getLineups?fixture=394
 const getLineupsFromDb = (req, res) =>
   retrieveDataFromDb(
     LineupsModel,
@@ -90,6 +108,7 @@ const getLineupsFromDb = (req, res) =>
     'No lineups data found for the provided parameters'
   );
 
+// http://localhost:3000/fixtures/db/getPlayers?fixture=394
 const getPlayersFromDb = (req, res) =>
   retrieveDataFromDb(
     PlayersModel,

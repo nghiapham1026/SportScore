@@ -34,7 +34,7 @@ const getTopScorers = (req, res) =>
 const getTopAssists = (req, res) =>
   genericHandler(endpoints.assists, req, res, 'Failed to fetch assists');
 
-// http://localhost:3000/players/getSquads?team=39
+// http://localhost:3000/players/db/getPlayers?team=39&season=2022
 const getPlayersFromDb = (req, res) => {
   const queryParams = req.query;
   retrieveDataFromDb(
