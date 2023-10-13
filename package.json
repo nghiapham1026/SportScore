@@ -10,13 +10,16 @@
     "lint:fix": "eslint . --fix",
     "format": "prettier --write \"**/*.{js,jsx,json,md}\""
   },
+  "engines": {
+    "node": "20.6.0"
+  },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "axios": "^1.5.1",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
-    "mongoose": "^7.5.3",
+    "mongoose": "^7.6.1",
     "node-cache": "^5.1.2",
     "node-cron": "^3.0.2"
   },

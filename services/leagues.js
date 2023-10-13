@@ -1,4 +1,3 @@
-const mongoose = require('mongoose');
 require('dotenv').config();
 
 const { apiUrl } = require('../utils/constants');

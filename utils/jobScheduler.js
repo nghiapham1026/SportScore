@@ -10,7 +10,7 @@ const fetchFixturesForToday = async () => {
 
   try {
     // Make a request to the /fixtures/getFixtures endpoint with the date parameter
-    const response = await axios.get(`${serverUrl}/fixtures/getFixtures`, {
+    await axios.get(`${serverUrl}/fixtures/getFixtures`, {
       params: {
         date: today,
       },
