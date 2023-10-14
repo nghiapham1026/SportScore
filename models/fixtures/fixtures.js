@@ -67,13 +67,16 @@ const fixtureSchema = new mongoose.Schema(
   { typeKey: '$type' }
 );
 
-const groupedFixtureSchema = new mongoose.Schema(
-  {
-    queryParams: mongoose.Schema.Types.Mixed,
-    allFixtures: [fixtureSchema],
-  },
-  { typeKey: '$type' }
-);
+const groupedFixtureSchema = new mongoose.Schema( 
+    { 
+      queryParams: mongoose.Schema.Types.Mixed, 
+      allFixtures: [fixtureSchema], 
+      updatedAt: {
+        type: Date,
+        default: Date.now
+      }
+    }, 
+);  
 
 const GroupedFixture =
   mongoose.models.Fixture || mongoose.model('Fixture', groupedFixtureSchema);
