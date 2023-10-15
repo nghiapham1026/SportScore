@@ -25,8 +25,8 @@ const groupedSquadSchema = new mongoose.Schema({
   allSquads: [squadSchema],
   updatedAt: {
     type: Date,
-    default: Date.now
-  }
+    default: Date.now,
+  },
 });
 
 const Squad =

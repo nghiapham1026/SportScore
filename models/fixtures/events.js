@@ -29,16 +29,14 @@ const eventSchema = new mongoose.Schema(
   { typeKey: '$type' }
 );
 
-const groupedFixtureEventsSchema = new mongoose.Schema(
-  {
-    queryParams: mongoose.Schema.Types.Mixed,
-    allFixtureEvents: [eventSchema],
-    updatedAt: {
-        type: Date,
-        default: Date.now
-      }
+const groupedFixtureEventsSchema = new mongoose.Schema({
+  queryParams: mongoose.Schema.Types.Mixed,
+  allFixtureEvents: [eventSchema],
+  updatedAt: {
+    type: Date,
+    default: Date.now,
   },
-);
+});
 
 const eventsModel =
   mongoose.models.GroupedFixtureEvents ||

@@ -19,16 +19,14 @@ const fixtureStatisticsSchema = new mongoose.Schema(
   { typeKey: '$type' }
 );
 
-const groupedFixtureStatisticsSchema = new mongoose.Schema(
-  {
-    queryParams: mongoose.Schema.Types.Mixed,
-    allFixtureStatistics: [fixtureStatisticsSchema],
-    updatedAt: {
-        type: Date,
-        default: Date.now
-      }
+const groupedFixtureStatisticsSchema = new mongoose.Schema({
+  queryParams: mongoose.Schema.Types.Mixed,
+  allFixtureStatistics: [fixtureStatisticsSchema],
+  updatedAt: {
+    type: Date,
+    default: Date.now,
   },
-);
+});
 
 const statisticsModel =
   mongoose.models.GroupedFixtureStatistics ||

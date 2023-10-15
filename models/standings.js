@@ -34,24 +34,22 @@ const standingSchema = new mongoose.Schema({
   update: Date,
 });
 
-const leagueStandingSchema = new mongoose.Schema(
-  {
-    queryParams: mongoose.Schema.Types.Mixed,
-    league: {
-      id: Number,
-      name: String,
-      country: String,
-      logo: String,
-      flag: String,
-      season: Number,
-    },
-    standings: [[standingSchema]], // Nested array as per the provided data
-    updatedAt: {
-        type: Date,
-        default: Date.now
-      }
+const leagueStandingSchema = new mongoose.Schema({
+  queryParams: mongoose.Schema.Types.Mixed,
+  league: {
+    id: Number,
+    name: String,
+    country: String,
+    logo: String,
+    flag: String,
+    season: Number,
   },
-);
+  standings: [[standingSchema]], // Nested array as per the provided data
+  updatedAt: {
+    type: Date,
+    default: Date.now,
+  },
+});
 
 const Standing =
   mongoose.models.LeagueStanding ||

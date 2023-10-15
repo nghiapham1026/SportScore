@@ -139,8 +139,8 @@ const groupedAssistSchema = new mongoose.Schema({
   allAssists: [assistSchema],
   updatedAt: {
     type: Date,
-    default: Date.now
-  }
+    default: Date.now,
+  },
 });
 
 // Model

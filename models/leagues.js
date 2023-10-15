@@ -50,8 +50,8 @@ const groupedLeagueSchema = new mongoose.Schema({
   allLeagues: [leagueSchema],
   updatedAt: {
     type: Date,
-    default: Date.now
-  }
+    default: Date.now,
+  },
 });
 
 const League =

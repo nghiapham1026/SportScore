@@ -45,8 +45,8 @@ const groupedFixtureLineupsSchema = new mongoose.Schema({
   allFixtureLineups: [lineupSchema],
   updatedAt: {
     type: Date,
-    default: Date.now
-  }
+    default: Date.now,
+  },
 });
 
 const LineupsModel =

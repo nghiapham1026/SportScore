@@ -11,16 +11,14 @@ const venueSchema = new mongoose.Schema({
   image: String,
 });
 
-const groupedVenueSchema = new mongoose.Schema(
-  {
-    queryParams: mongoose.Schema.Types.Mixed,
-    allVenues: [venueSchema],
-    updatedAt: {
-        type: Date,
-        default: Date.now
-      }
+const groupedVenueSchema = new mongoose.Schema({
+  queryParams: mongoose.Schema.Types.Mixed,
+  allVenues: [venueSchema],
+  updatedAt: {
+    type: Date,
+    default: Date.now,
   },
-);
+});
 
 const Venue =
   mongoose.models.Venue || mongoose.model('Venue', groupedVenueSchema);

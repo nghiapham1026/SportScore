@@ -149,8 +149,8 @@ const groupedScorerSchema = new mongoose.Schema({
   topScorers: [scorerSchema],
   updatedAt: {
     type: Date,
-    default: Date.now
-  }
+    default: Date.now,
+  },
 });
 
 const Scorer =

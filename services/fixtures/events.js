@@ -24,23 +24,25 @@ const getFixtureEvents = async (params) => {
   const groupedData = {
     queryParams: params,
     allFixtureEvents: fixtureEventsData,
-    updatedAt: Date.now(),  // Set the updatedAt timestamp
+    updatedAt: Date.now(), // Set the updatedAt timestamp
   };
 
   // Check if data already exists in MongoDB
   try {
-    const existingData = await GroupedFixtureEvents.findOne({ queryParams: params });
+    const existingData = await GroupedFixtureEvents.findOne({
+      queryParams: params,
+    });
 
     // If data does not exist, save to MongoDB
     if (!existingData) {
-        const fixtureEventsGroup = new GroupedFixtureEvents(groupedData);
-        await fixtureEventsGroup.save();
-        console.log('Data saved successfully');
+      const fixtureEventsGroup = new GroupedFixtureEvents(groupedData);
+      await fixtureEventsGroup.save();
+      console.log('Data saved successfully');
     } else {
       // Replace the existing data
       await GroupedFixtureEvents.findOneAndReplace(
         { queryParams: params },
-        {...groupedData, updatedAt: Date.now()} // Update the timestamp
+        { ...groupedData, updatedAt: Date.now() } // Update the timestamp
       );
       console.log(
         'Data already exists in the database. Existing data has been replaced with new data.'

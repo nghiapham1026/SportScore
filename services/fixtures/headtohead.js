@@ -22,7 +22,7 @@ const getHeadToHeadFixtures = async (params) => {
   const groupedData = {
     queryParams: params,
     allHeadToHeadFixtures: headToHeadFixtureData,
-    updatedAt: Date.now(),  // Set the updatedAt timestamp
+    updatedAt: Date.now(), // Set the updatedAt timestamp
   };
 
   // Check if data already exists in MongoDB
@@ -40,7 +40,7 @@ const getHeadToHeadFixtures = async (params) => {
       // Replace the existing data
       await GroupedHeadToHeadFixture.findOneAndReplace(
         { queryParams: params },
-        {...groupedData, updatedAt: Date.now()} // Update the timestamp
+        { ...groupedData, updatedAt: Date.now() } // Update the timestamp
       );
       console.log(
         'Data already exists in the database. Existing data has been replaced with new data.'

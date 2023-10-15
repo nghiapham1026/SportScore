@@ -35,7 +35,7 @@ const getVenues = async (params) => {
   const groupedData = {
     queryParams: lowercasedParams,
     allVenues: venueData,
-    updatedAt: Date.now(),  // Set the updatedAt timestamp
+    updatedAt: Date.now(), // Set the updatedAt timestamp
   };
 
   // Save to MongoDB
@@ -51,7 +51,7 @@ const getVenues = async (params) => {
       // Replace the existing data
       await Venue.findOneAndReplace(
         { queryParams: lowercasedParams },
-        {...groupedData, updatedAt: Date.now()}  // Update the timestamp
+        { ...groupedData, updatedAt: Date.now() } // Update the timestamp
       );
       console.log(
         'Data already exists in the database. Existing data has been replaced with new data.'
