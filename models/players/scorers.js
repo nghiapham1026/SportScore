@@ -147,6 +147,10 @@ const scorerSchema = new mongoose.Schema({
 const groupedScorerSchema = new mongoose.Schema({
   queryParams: mongoose.Schema.Types.Mixed,
   topScorers: [scorerSchema],
+  updatedAt: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
 const Scorer =

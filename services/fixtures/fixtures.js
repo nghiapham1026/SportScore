@@ -40,13 +40,14 @@ const getFixtures = async (params) => {
     // If data does not exist, save to MongoDB
     if (!existingData) {
       const fixtureGroup = new GroupedFixture(groupedData);
+      fixtureGroup.updatedAt = Date.now(); // Update the timestamp
       await fixtureGroup.save();
       console.log('Data saved successfully');
     } else {
       // Replace the existing data
       await GroupedFixture.findOneAndReplace(
         { queryParams: params },
-        groupedData
+        { ...groupedData, updatedAt: Date.now() }
       );
       console.log(
         'Data already exists in the database. Existing data has been replaced with new data.'

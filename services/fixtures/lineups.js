@@ -22,6 +22,7 @@ const getFixtureLineups = async (params) => {
   const groupedData = {
     queryParams: params,
     allFixtureLineups: fixtureLineupsData,
+    updatedAt: Date.now(), // Set the updatedAt timestamp
   };
 
   // Save to MongoDB
@@ -39,7 +40,7 @@ const getFixtureLineups = async (params) => {
       // Replace the existing data
       await GroupedFixtureLineups.findOneAndReplace(
         { queryParams: params },
-        groupedData
+        { ...groupedData, updatedAt: Date.now() } // Update the timestamp
       );
       console.log(
         'Data already exists in the database. Existing data has been replaced with new data.'

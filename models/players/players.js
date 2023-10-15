@@ -129,6 +129,10 @@ const groupedPlayerSchema = new mongoose.Schema({
       statistics: [statisticsSchema],
     },
   ],
+  updatedAt: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
 const Player =

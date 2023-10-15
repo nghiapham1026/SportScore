@@ -36,10 +36,10 @@ const getTopAssists = (req, res) =>
 
 // http://localhost:3000/players/db/getPlayers?team=39&season=2022
 const getPlayersFromDb = (req, res) => {
-  const queryParams = req.query;
   retrieveDataFromDb(
     Player,
-    queryParams,
+    playersModel.getPlayers,
+    req.query,
     res,
     'No players found for the provided parameters'
   );
@@ -47,10 +47,10 @@ const getPlayersFromDb = (req, res) => {
 
 // http://localhost:3000/players/db/getSquads?team=39
 const getSquadsFromDb = (req, res) => {
-  const queryParams = req.query;
   retrieveDataFromDb(
     Squad,
-    queryParams,
+    squadsModel.getSquads,
+    req.query,
     res,
     'No squads found for the provided parameters'
   );
@@ -58,10 +58,10 @@ const getSquadsFromDb = (req, res) => {
 
 // http://localhost:3000/players/db/getTopScorers?league=39&season=2022
 const getTopScorersFromDb = (req, res) => {
-  const queryParams = req.query;
   retrieveDataFromDb(
     Scorer,
-    queryParams,
+    scorersModel.getTopScorers,
+    req.query,
     res,
     'No top scorers found for the provided parameters'
   );
@@ -69,10 +69,10 @@ const getTopScorersFromDb = (req, res) => {
 
 // http://localhost:3000/players/db/getTopAssists?league=39&season=2022
 const getTopAssistsFromDb = (req, res) => {
-  const queryParams = req.query;
   retrieveDataFromDb(
     Assist,
-    queryParams,
+    assistsModel.getAssists,
+    req.query,
     res,
     'No assists found for the provided parameters'
   );
