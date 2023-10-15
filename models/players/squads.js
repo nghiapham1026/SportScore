@@ -23,6 +23,10 @@ const squadSchema = new mongoose.Schema({
 const groupedSquadSchema = new mongoose.Schema({
   queryParams: mongoose.Schema.Types.Mixed,
   allSquads: [squadSchema],
+  updatedAt: {
+    type: Date,
+    default: Date.now
+  }
 });
 
 const Squad =

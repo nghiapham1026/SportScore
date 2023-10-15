@@ -46,6 +46,10 @@ const leagueStandingSchema = new mongoose.Schema(
       season: Number,
     },
     standings: [[standingSchema]], // Nested array as per the provided data
+    updatedAt: {
+        type: Date,
+        default: Date.now
+      }
   },
   { typeKey: '$type' }
 );

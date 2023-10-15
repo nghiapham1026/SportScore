@@ -82,6 +82,10 @@ const fixturePlayersSchema = new mongoose.Schema({
       players: [playerSchema],
     },
   ],
+  updatedAt: {
+    type: Date,
+    default: Date.now
+  }
 });
 
 const playersModel =

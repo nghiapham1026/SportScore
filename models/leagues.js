@@ -48,6 +48,10 @@ const leagueSchema = new mongoose.Schema(
 const groupedLeagueSchema = new mongoose.Schema({
   queryParams: mongoose.Schema.Types.Mixed,
   allLeagues: [leagueSchema],
+  updatedAt: {
+    type: Date,
+    default: Date.now
+  }
 });
 
 const League =

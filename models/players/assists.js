@@ -137,6 +137,10 @@ const assistSchema = new mongoose.Schema({
 const groupedAssistSchema = new mongoose.Schema({
   queryParams: mongoose.Schema.Types.Mixed,
   allAssists: [assistSchema],
+  updatedAt: {
+    type: Date,
+    default: Date.now
+  }
 });
 
 // Model

@@ -33,6 +33,10 @@ const groupedFixtureEventsSchema = new mongoose.Schema(
   {
     queryParams: mongoose.Schema.Types.Mixed,
     allFixtureEvents: [eventSchema],
+    updatedAt: {
+        type: Date,
+        default: Date.now
+      }
   },
   { typeKey: '$type' }
 );

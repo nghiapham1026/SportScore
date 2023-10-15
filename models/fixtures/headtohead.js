@@ -71,6 +71,10 @@ const groupedHeadToHeadFixtureSchema = new mongoose.Schema(
   {
     queryParams: mongoose.Schema.Types.Mixed,
     allHeadToHeadFixtures: [headToHeadFixtureSchema],
+    updatedAt: {
+        type: Date,
+        default: Date.now
+      }
   },
   { typeKey: '$type' }
 );

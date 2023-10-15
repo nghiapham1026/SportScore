@@ -15,6 +15,10 @@ const groupedVenueSchema = new mongoose.Schema(
   {
     queryParams: mongoose.Schema.Types.Mixed,
     allVenues: [venueSchema],
+    updatedAt: {
+        type: Date,
+        default: Date.now
+      }
   },
   { typeKey: '$type' }
 );

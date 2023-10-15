@@ -23,6 +23,10 @@ const groupedFixtureStatisticsSchema = new mongoose.Schema(
   {
     queryParams: mongoose.Schema.Types.Mixed,
     allFixtureStatistics: [fixtureStatisticsSchema],
+    updatedAt: {
+        type: Date,
+        default: Date.now
+      }
   },
   { typeKey: '$type' }
 );
