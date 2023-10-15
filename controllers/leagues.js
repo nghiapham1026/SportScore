@@ -13,11 +13,11 @@ const getLeagues = (req, res) =>
   genericHandler(endpoints.leagues, req, res, 'Failed to fetch leagues');
 
 // http://localhost:3000/leagues/db/getLeagues
-const getLeaguesFromDb = (_, res) => {
-  // No query parameters are needed for this function as per the original implementation
+const getLeaguesFromDb = (req, res) => {
   retrieveDataFromDb(
     League,
-    {},
+    leaguesModel.getLeagues,
+    req.query, // We're passing the query parameters, even if it's empty now. It's good for future extensions.
     res,
     'No leagues found for the provided parameters'
   );

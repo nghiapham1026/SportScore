@@ -14,10 +14,10 @@ const getVenues = (req, res) =>
 
 // http://localhost:3000/venues/db/getTeamVenues?city=manchester
 const getVenuesFromDb = (req, res) => {
-  const queryParams = req.query; // Extract query parameters from the request
   retrieveDataFromDb(
     Venue,
-    queryParams,
+    venuesModel.getVenues,
+    req.query,
     res,
     'No venues found for the provided parameters'
   );
