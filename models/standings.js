@@ -51,7 +51,6 @@ const leagueStandingSchema = new mongoose.Schema(
         default: Date.now
       }
   },
-  { typeKey: '$type' }
 );
 
 const Standing =

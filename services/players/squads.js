@@ -17,6 +17,7 @@ const getSquads = async (params) => {
   const groupedData = {
     queryParams: params,
     allSquads: squadData,
+    updatedAt: Date.now(),  // Set the updatedAt timestamp
   };
 
   try {
@@ -26,7 +27,10 @@ const getSquads = async (params) => {
       await Squad.create(groupedData);
       console.log('Data saved successfully');
     } else {
-      await Squad.findOneAndReplace({ queryParams: params }, groupedData);
+      await Squad.findOneAndReplace(
+        { queryParams: params },
+        {...groupedData, updatedAt: Date.now()}  // Update the timestamp
+      );
       console.log(
         'Data already exists in the database. Existing data has been replaced with new data.'
       );

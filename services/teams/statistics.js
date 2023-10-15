@@ -41,6 +41,7 @@ const getTeamStatistics = async (params) => {
     penalty: item.penalty,
     lineups: item.lineups,
     cards: item.cards,
+    updatedAt: Date.now(),  // Set the updatedAt timestamp
   }));
 
   // Save to MongoDB
@@ -59,7 +60,7 @@ const getTeamStatistics = async (params) => {
         // Replace the existing data
         await TeamStatistics.findOneAndReplace(
           { queryParams: params },
-          statData
+          {...statData, updatedAt: Date.now()}  // Update the timestamp
         );
         console.log(
           `Data for team ${statData.team.name} already exists in the database. Existing data has been replaced with new data.`

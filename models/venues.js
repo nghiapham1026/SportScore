@@ -20,7 +20,6 @@ const groupedVenueSchema = new mongoose.Schema(
         default: Date.now
       }
   },
-  { typeKey: '$type' }
 );
 
 const Venue =

@@ -19,6 +19,7 @@ const getTeams = async (params) => {
   const groupedData = {
     queryParams: params,
     allTeams: teamData,
+    updatedAt: Date.now(),  // Set the updatedAt timestamp
   };
 
   // Save to MongoDB
@@ -33,7 +34,10 @@ const getTeams = async (params) => {
       console.log('Data saved successfully');
     } else {
       // Replace the existing data
-      await GroupedTeam.findOneAndReplace({ queryParams: params }, groupedData);
+      await GroupedTeam.findOneAndReplace(
+        { queryParams: params },
+        {...groupedData, updatedAt: Date.now()}  // Update the timestamp
+      );
       console.log(
         'Data already exists in the database. Existing data has been replaced with new data.'
       );

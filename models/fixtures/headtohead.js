@@ -76,7 +76,6 @@ const groupedHeadToHeadFixtureSchema = new mongoose.Schema(
         default: Date.now
       }
   },
-  { typeKey: '$type' }
 );
 
 const HeadToHeadModel =
