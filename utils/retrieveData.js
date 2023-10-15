@@ -10,10 +10,9 @@ const retrieveDataFromDb = async (Model, fetchFunction, queryParams, res, errorM
       }
 
       if (!data) {
-        data = await fetchAndSaveToDb(fetchFunction, Model, queryParams);
-        if (!data) {
-          return res.status(404).json({ message: errorMessage });
-        }
+        await fetchAndSaveToDb(fetchFunction, Model, queryParams);
+        // Call itself recursively to get the newly saved data
+        return retrieveDataFromDb(Model, fetchFunction, queryParams, res, errorMessage);
       }
       res.status(200).json(data);
     } catch (error) {
