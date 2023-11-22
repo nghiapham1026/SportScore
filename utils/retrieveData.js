@@ -18,8 +18,8 @@ const retrieveDataFromDb = async (
     const currentTime = new Date();
     const twentyFourHoursAgo = new Date(currentTime - 24 * 60 * 60 * 1000); // 24 hours ago in milliseconds
 
-    // If there's no data or the data's updatedOn date is more than 24 hours old, fetch and save new data
-    if (!data || (data.updatedOn && data.updatedOn < twentyFourHoursAgo)) {
+    // If there's no data or the data's updatedAt date is more than 24 hours old, fetch and save new data
+    if (!data || (data.updatedAt && data.updatedAt < twentyFourHoursAgo)) {
       await fetchAndSaveToDb(fetchFunction, Model, queryParams);
       // Call itself recursively to get the newly saved data
       return retrieveDataFromDb(
