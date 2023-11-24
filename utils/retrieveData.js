@@ -27,14 +27,25 @@ const retrieveDataFromDb = async (
 
       // If there's no data or the data's updatedAt date is more than 24 hours old
       // fetch new data and update the cache
+      // In retrieveDataFromDb, when preparing to set data in the cache
       if (!data || (data.updatedAt && data.updatedAt < twentyFourHoursAgo)) {
-        const fetchedData = await fetchAndSaveToDb(fetchFunction, Model, queryParams);
+        const fetchedData = await fetchAndSaveToDb(
+          fetchFunction,
+          Model,
+          queryParams
+        );
+
+        // Convert Mongoose document to a plain object if it's not already one
+        const dataToCache =
+          fetchedData instanceof Model ? fetchedData.toObject() : fetchedData;
+
         // Update cache with new data using stdTTL as the TTL
-        cache.set(cacheKey, JSON.stringify(fetchedData), 3600); // 3600 seconds TTL
-        data = fetchedData;
+        cache.set(cacheKey, dataToCache, 3600); // 3600 seconds TTL
+        data = dataToCache;
       } else {
         // Data is fresh enough, update the cache
-        cache.set(cacheKey, JSON.stringify(data), 3600);
+        const dataToCache = data instanceof Model ? data.toObject() : data;
+        cache.set(cacheKey, dataToCache, 3600);
       }
     }
 
@@ -56,7 +67,7 @@ const fetchAndSaveToDb = async (fetchFunction, Model, queryParams) => {
     const newData = await fetchFunction(queryParams);
     const instance = new Model(newData);
     await instance.save();
-    return newData;
+    return instance.toObject(); // Convert to a plain object
   } catch (error) {
     console.error('Error fetching and saving data:', error);
     throw error; // Rethrow the error to be handled by the caller
