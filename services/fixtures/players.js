@@ -6,8 +6,16 @@ const FixturePlayers = require('../../models/fixtures/players'); // Import the s
 
 const API_ENDPOINT = `${apiUrl}/fixtures/players`;
 
-const getFixturePlayers = async (params) => {
+const getFixturePlayers = async (params, attempts = 0) => {
   const data = await fetchData(API_ENDPOINT, params);
+
+  if (!data.response || data.response.length === 0) {
+    if (attempts < 2) { // 2 here because the first call is attempt 0
+      return getVenues(params, attempts + 1);
+    } else {
+      return { error: "Empty data after multiple attempts" };
+    }
+  }
 
   // Grouping the two datasets into a single object
   const groupedData = {
@@ -23,10 +31,6 @@ const getFixturePlayers = async (params) => {
     }),
     updatedAt: Date.now(), // Set the updatedAt timestamp
   };
-
-  if (!Array.isArray(groupedData.teams)) {
-    return { error: "Empty data" };
-  }
 
   // Save to MongoDB
   try {

@@ -6,8 +6,16 @@ const LeagueStanding = require('../models/standings'); // Import the modified sc
 
 const API_ENDPOINT = `${apiUrl}/standings`;
 
-const getStandings = async (params) => {
+const getStandings = async (params, attempts = 0) => {
   const data = await fetchData(API_ENDPOINT, params);
+
+  if (!data.response || data.response.length === 0) {
+    if (attempts < 2) { // 2 here because the first call is attempt 0
+      return getVenues(params, attempts + 1);
+    } else {
+      return { error: "Empty data after multiple attempts" };
+    }
+  }
 
   // Process the data into the schema
   const standingData = data.response.map((item) => ({
@@ -21,10 +29,6 @@ const getStandings = async (params) => {
     },
     standings: item.league.standings,
   }));
-
-  if (!Array.isArray(standingData.standings)) {
-    return { error: "Empty data" };
-  }
 
   // Create a single object to group all the standings and include the query params
   const groupedData = {

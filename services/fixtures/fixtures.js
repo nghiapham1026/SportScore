@@ -6,8 +6,16 @@ const GroupedFixture = require('../../models/fixtures/fixtures'); // Import the 
 
 const API_ENDPOINT = `${apiUrl}/fixtures`;
 
-const getFixtures = async (params) => {
+const getFixtures = async (params, attempts = 0) => {
   const data = await fetchData(API_ENDPOINT, params);
+
+  if (!data.response || data.response.length === 0) {
+    if (attempts < 2) { // 2 here because the first call is attempt 0
+      return getVenues(params, attempts + 1);
+    } else {
+      return { error: "Empty data after multiple attempts" };
+    }
+  }
 
   // Filter data based on the league IDs
   const filteredData = data.response.filter((item) =>
@@ -32,10 +40,6 @@ const getFixtures = async (params) => {
     queryParams: params,
     allFixtures: fixtureData,
   };
-
-  if (!Array.isArray(groupedData.allFixtures)) {
-    return { error: "Empty data" };
-  }
 
   // Check if data already exists in MongoDB
   try {

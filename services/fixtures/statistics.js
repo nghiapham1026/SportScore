@@ -6,8 +6,16 @@ const GroupedFixtureStatistics = require('../../models/fixtures/statistics'); //
 
 const API_ENDPOINT = `${apiUrl}/fixtures/statistics`;
 
-const getFixtureStatistics = async (params) => {
+const getFixtureStatistics = async (params, attempts = 0) => {
   const data = await fetchData(API_ENDPOINT, params);
+
+  if (!data.response || data.response.length === 0) {
+    if (attempts < 2) { // 2 here because the first call is attempt 0
+      return getVenues(params, attempts + 1);
+    } else {
+      return { error: "Empty data after multiple attempts" };
+    }
+  }
 
   // Process the data into the schema
   const fixtureStatisticsData = data.response.map((item) => ({
@@ -21,10 +29,6 @@ const getFixtureStatistics = async (params) => {
     allFixtureStatistics: fixtureStatisticsData,
     updatedAt: Date.now(), // Set the updatedAt timestamp
   };
-
-  if (!Array.isArray(groupedData.allFixtureStatistics)) {
-    return { error: "Empty data" };
-  }
 
   // Save to MongoDB
   try {

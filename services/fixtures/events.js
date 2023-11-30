@@ -6,8 +6,16 @@ const GroupedFixtureEvents = require('../../models/fixtures/events'); // Import 
 
 const API_ENDPOINT = `${apiUrl}/fixtures/events`;
 
-const getFixtureEvents = async (params) => {
+const getFixtureEvents = async (params, attempts = 0) => {
   const data = await fetchData(API_ENDPOINT, params);
+
+  if (!data.response || data.response.length === 0) {
+    if (attempts < 2) { // 2 here because the first call is attempt 0
+      return getVenues(params, attempts + 1);
+    } else {
+      return { error: "Empty data after multiple attempts" };
+    }
+  }
 
   // Process the data into the schema
   const fixtureEventsData = data.response.map((item) => ({
@@ -26,10 +34,6 @@ const getFixtureEvents = async (params) => {
     allFixtureEvents: fixtureEventsData,
     updatedAt: Date.now(), // Set the updatedAt timestamp
   };
-
-  if (!Array.isArray(groupedData.allFixtureEvents)) {
-    return { error: "Empty data" };
-  }
 
   // Check if data already exists in MongoDB
   try {

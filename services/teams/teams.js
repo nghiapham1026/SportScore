@@ -6,8 +6,16 @@ const GroupedTeam = require('../../models/teams/teams'); // Import the modified 
 
 const API_ENDPOINT = `${apiUrl}/teams`;
 
-const getTeams = async (params) => {
+const getTeams = async (params, attempts = 0) => {
   const data = await fetchData(API_ENDPOINT, params);
+
+  if (!data.response || data.response.length === 0) {
+    if (attempts < 2) { // 2 here because the first call is attempt 0
+      return getVenues(params, attempts + 1);
+    } else {
+      return { error: "Empty data after multiple attempts" };
+    }
+  }
 
   // Process the data into the schema
   const teamData = data.response.map((item) => ({
@@ -21,10 +29,6 @@ const getTeams = async (params) => {
     allTeams: teamData,
     updatedAt: Date.now(), // Set the updatedAt timestamp
   };
-
-  if (!Array.isArray(groupedData.allTeams)) {
-    return { error: "Empty data" };
-  }
 
   // Save to MongoDB
   try {
