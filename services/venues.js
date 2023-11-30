@@ -20,10 +20,11 @@ const getVenues = async (params, attempts = 0) => {
   const data = await fetchData(API_ENDPOINT, lowercasedParams);
 
   if (!data.response || data.response.length === 0) {
-    if (attempts < 2) { // 2 here because the first call is attempt 0
+    if (attempts < 2) {
+      // 2 here because the first call is attempt 0
       return getVenues(params, attempts + 1);
     } else {
-      return { error: "Empty data after multiple attempts" };
+      return { error: 'Empty data after multiple attempts' };
     }
   }
 
@@ -55,7 +56,9 @@ const getVenues = async (params, attempts = 0) => {
     if (!existingData) {
       await Venue.create(groupedData);
       console.log('Data saved successfully');
-    } else if (existingData.updatedAt < new Date(new Date() - 24 * 60 * 60 * 1000)) {
+    } else if (
+      existingData.updatedAt < new Date(new Date() - 24 * 60 * 60 * 1000)
+    ) {
       // Replace the existing data
       await Venue.findOneAndReplace(
         { queryParams: lowercasedParams },

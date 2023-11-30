@@ -10,10 +10,11 @@ const getFixtureLineups = async (params, attempts = 0) => {
   const data = await fetchData(API_ENDPOINT, params);
 
   if (!data.response || data.response.length === 0) {
-    if (attempts < 2) { // 2 here because the first call is attempt 0
-      return getVenues(params, attempts + 1);
+    if (attempts < 2) {
+      // 2 here because the first call is attempt 0
+      return getFixtureLineups(params, attempts + 1);
     } else {
-      return { error: "Empty data after multiple attempts" };
+      return { error: 'Empty data after multiple attempts' };
     }
   }
 
@@ -44,7 +45,9 @@ const getFixtureLineups = async (params, attempts = 0) => {
       const fixtureLineupsGroup = new GroupedFixtureLineups(groupedData);
       await fixtureLineupsGroup.save();
       console.log('Data saved successfully');
-    } else if (existingData.updatedAt < new Date(new Date() - 24 * 60 * 60 * 1000)) {
+    } else if (
+      existingData.updatedAt < new Date(new Date() - 24 * 60 * 60 * 1000)
+    ) {
       // Replace the existing data
       await GroupedFixtureLineups.findOneAndReplace(
         { queryParams: params },
