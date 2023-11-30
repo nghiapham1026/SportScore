@@ -20,13 +20,17 @@ const getAssists = async (params) => {
     updatedAt: Date.now(), // Set the updatedAt timestamp
   };
 
+  if (!Array.isArray(groupedData.allAssists)) {
+    return { error: "Empty data" };
+  }
+
   try {
     const existingData = await Assist.findOne({ queryParams: params });
 
     if (!existingData) {
       await Assist.create(groupedData);
       console.log('Data saved successfully');
-    } else {
+    } else if (existingData.updatedAt < new Date(new Date() - 24 * 60 * 60 * 1000)) {
       await Assist.findOneAndReplace(
         { queryParams: params },
         { ...groupedData, updatedAt: Date.now() } // Update the timestamp

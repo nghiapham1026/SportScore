@@ -29,11 +29,7 @@ const retrieveDataFromDb = async (
       // fetch new data and update the cache
       // In retrieveDataFromDb, when preparing to set data in the cache
       if (!data || (data.updatedAt && data.updatedAt < twentyFourHoursAgo)) {
-        const fetchedData = await fetchAndSaveToDb(
-          fetchFunction,
-          Model,
-          queryParams
-        );
+        const fetchedData = await fetchFunction(queryParams);
 
         // Convert Mongoose document to a plain object if it's not already one
         const dataToCache =
@@ -59,18 +55,6 @@ const retrieveDataFromDb = async (
   } catch (error) {
     console.error('Error fetching data:', error);
     res.status(500).json({ message: 'Internal Server Error' });
-  }
-};
-
-const fetchAndSaveToDb = async (fetchFunction, Model, queryParams) => {
-  try {
-    const newData = await fetchFunction(queryParams);
-    const instance = new Model(newData);
-    await instance.save();
-    return instance.toObject(); // Convert to a plain object
-  } catch (error) {
-    console.error('Error fetching and saving data:', error);
-    throw error; // Rethrow the error to be handled by the caller
   }
 };
 

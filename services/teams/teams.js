@@ -22,6 +22,10 @@ const getTeams = async (params) => {
     updatedAt: Date.now(), // Set the updatedAt timestamp
   };
 
+  if (!Array.isArray(groupedData.allTeams)) {
+    return { error: "Empty data" };
+  }
+
   // Save to MongoDB
   try {
     // Check for existing data using queryParams as a unique identifier
@@ -32,7 +36,7 @@ const getTeams = async (params) => {
       const teamGroup = new GroupedTeam(groupedData);
       await teamGroup.save();
       console.log('Data saved successfully');
-    } else {
+    } else if (existingData.updatedAt < new Date(new Date() - 24 * 60 * 60 * 1000)) {
       // Replace the existing data
       await GroupedTeam.findOneAndReplace(
         { queryParams: params },

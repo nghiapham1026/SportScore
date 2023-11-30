@@ -38,6 +38,10 @@ const getVenues = async (params) => {
     updatedAt: Date.now(), // Set the updatedAt timestamp
   };
 
+  if (!Array.isArray(groupedData.allVenues)) {
+    return { error: "Empty data" };
+  }
+
   // Save to MongoDB
   try {
     // Check for existing data using queryParams as a unique identifier
@@ -47,7 +51,7 @@ const getVenues = async (params) => {
     if (!existingData) {
       await Venue.create(groupedData);
       console.log('Data saved successfully');
-    } else {
+    } else if (existingData.updatedAt < new Date(new Date() - 24 * 60 * 60 * 1000)) {
       // Replace the existing data
       await Venue.findOneAndReplace(
         { queryParams: lowercasedParams },

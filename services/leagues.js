@@ -31,6 +31,10 @@ const getLeagues = async (params) => {
     updatedAt: Date.now(), // Set the updatedAt timestamp
   };
 
+  if (!Array.isArray(groupedData.allLeagues)) {
+    return { error: "Empty data" };
+  }
+
   // Save to MongoDB
   try {
     // Check for existing data using league.id as a unique identifier
@@ -45,7 +49,7 @@ const getLeagues = async (params) => {
       const leagueGroup = new League(groupedData);
       await leagueGroup.save();
       console.log('Data saved successfully');
-    } else {
+    } else if (existingData.updatedAt < new Date(new Date() - 24 * 60 * 60 * 1000)) {
       // Replace the existing data
       await League.findOneAndReplace(
         {

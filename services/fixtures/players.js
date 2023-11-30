@@ -24,6 +24,10 @@ const getFixturePlayers = async (params) => {
     updatedAt: Date.now(), // Set the updatedAt timestamp
   };
 
+  if (!Array.isArray(groupedData.teams)) {
+    return { error: "Empty data" };
+  }
+
   // Save to MongoDB
   try {
     const existingData = await FixturePlayers.findOne({ queryParams: params });
@@ -33,7 +37,7 @@ const getFixturePlayers = async (params) => {
       const fixturePlayersEntry = new FixturePlayers(groupedData);
       await fixturePlayersEntry.save();
       console.log('Data saved successfully');
-    } else {
+    } else if (existingData.updatedAt < new Date(new Date() - 24 * 60 * 60 * 1000)) {
       // Replace the existing data
       await FixturePlayers.findOneAndReplace(
         { queryParams: params },

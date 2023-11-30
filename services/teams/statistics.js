@@ -44,6 +44,10 @@ const getTeamStatistics = async (params) => {
     updatedAt: Date.now(), // Set the updatedAt timestamp
   }));
 
+  if (!Array.isArray(statisticsData.league)) {
+    return { error: "Empty data" };
+  }
+
   // Save to MongoDB
   try {
     for (const statData of statisticsData) {
@@ -56,7 +60,7 @@ const getTeamStatistics = async (params) => {
       if (!existingData) {
         await TeamStatistics.create(statData);
         console.log(`Data for team ${statData.team.name} saved successfully`);
-      } else {
+      } else if (existingData.updatedAt < new Date(new Date() - 24 * 60 * 60 * 1000)) {
         // Replace the existing data
         await TeamStatistics.findOneAndReplace(
           { queryParams: params },

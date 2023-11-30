@@ -22,6 +22,10 @@ const getPlayers = async (params) => {
     updatedAt: Date.now(), // Set the updatedAt timestamp
   };
 
+  if (!Array.isArray(groupedData.allPlayers)) {
+    return { error: "Empty data" };
+  }
+
   // Save to MongoDB
   try {
     const existingData = await Player.findOne({ queryParams: params });
@@ -29,7 +33,7 @@ const getPlayers = async (params) => {
     if (!existingData) {
       await Player.create(groupedData);
       console.log('Data saved successfully');
-    } else {
+    } else if (existingData.updatedAt < new Date(new Date() - 24 * 60 * 60 * 1000)) {
       await Player.findOneAndReplace(
         { queryParams: params },
         { ...groupedData, updatedAt: Date.now() } // Update the timestamp

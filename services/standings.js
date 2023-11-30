@@ -22,6 +22,10 @@ const getStandings = async (params) => {
     standings: item.league.standings,
   }));
 
+  if (!Array.isArray(standingData.standings)) {
+    return { error: "Empty data" };
+  }
+
   // Create a single object to group all the standings and include the query params
   const groupedData = {
     queryParams: params,
@@ -38,7 +42,7 @@ const getStandings = async (params) => {
     if (!existingData) {
       await LeagueStanding.create(groupedData);
       console.log('Data saved successfully');
-    } else {
+    } else if (existingData.updatedAt < new Date(new Date() - 24 * 60 * 60 * 1000)) {
       // Replace the existing data
       await LeagueStanding.findOneAndReplace(
         { queryParams: params },

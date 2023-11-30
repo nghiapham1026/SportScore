@@ -20,13 +20,17 @@ const getSquads = async (params) => {
     updatedAt: Date.now(), // Set the updatedAt timestamp
   };
 
+  if (!Array.isArray(groupedData.allSquads)) {
+    return { error: "Empty data" };
+  }
+
   try {
     const existingData = await Squad.findOne({ queryParams: params });
 
     if (!existingData) {
       await Squad.create(groupedData);
       console.log('Data saved successfully');
-    } else {
+    } else if (existingData.updatedAt < new Date(new Date() - 24 * 60 * 60 * 1000)) {
       await Squad.findOneAndReplace(
         { queryParams: params },
         { ...groupedData, updatedAt: Date.now() } // Update the timestamp

@@ -33,6 +33,10 @@ const getFixtures = async (params) => {
     allFixtures: fixtureData,
   };
 
+  if (!Array.isArray(groupedData.allFixtures)) {
+    return { error: "Empty data" };
+  }
+
   // Check if data already exists in MongoDB
   try {
     const existingData = await GroupedFixture.findOne({ queryParams: params });
@@ -43,7 +47,7 @@ const getFixtures = async (params) => {
       fixtureGroup.updatedAt = Date.now(); // Update the timestamp
       await fixtureGroup.save();
       console.log('Data saved successfully');
-    } else {
+    } else if (existingData.updatedAt < new Date(new Date() - 24 * 60 * 60 * 1000)) {
       // Replace the existing data
       await GroupedFixture.findOneAndReplace(
         { queryParams: params },

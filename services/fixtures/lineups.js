@@ -25,6 +25,10 @@ const getFixtureLineups = async (params) => {
     updatedAt: Date.now(), // Set the updatedAt timestamp
   };
 
+  if (!Array.isArray(groupedData.allFixtureLineups)) {
+    return { error: "Empty data" };
+  }
+
   // Save to MongoDB
   try {
     const existingData = await GroupedFixtureLineups.findOne({
@@ -36,7 +40,7 @@ const getFixtureLineups = async (params) => {
       const fixtureLineupsGroup = new GroupedFixtureLineups(groupedData);
       await fixtureLineupsGroup.save();
       console.log('Data saved successfully');
-    } else {
+    } else if (existingData.updatedAt < new Date(new Date() - 24 * 60 * 60 * 1000)) {
       // Replace the existing data
       await GroupedFixtureLineups.findOneAndReplace(
         { queryParams: params },

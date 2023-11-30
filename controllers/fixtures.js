@@ -16,7 +16,6 @@ const genericHandler = require('../utils/genericHandler');
 const retrieveDataFromDb = require('../utils/retrieveData');
 
 const endpoints = {
-  rounds: fixturesModel.getRounds,
   fixtures: fixturesModel.getFixtures,
   headtohead: headToHeadModel.getHeadToHeadFixtures,
   statistics: statisticsModel.getFixtureStatistics,
@@ -24,10 +23,6 @@ const endpoints = {
   lineups: lineupsModel.getFixtureLineups,
   players: playersModel.getFixturePlayers,
 };
-
-// http://localhost:3000/fixtures/getFixtureRounds?league=39&season=2022
-const getRounds = (req, res) =>
-  genericHandler(endpoints.rounds, req, res, 'Failed to fetch rounds');
 
 // http://localhost:3000/fixtures/getFixtures?date=2023-10-05
 const getFixtures = (req, res) =>
@@ -70,7 +65,7 @@ const getFixturesFromDb = (req, res) =>
     fixturesModel.getFixtures, // pass the fetch function here
     req.query,
     res,
-    'No fixtures found for the provided parameters'
+        'No fixtures found for the provided parameters'
   );
 
 // http://localhost:3000/fixtures/db/getStatistics?fixture=394
@@ -80,7 +75,7 @@ const getHeadToHeadFromDb = (req, res) =>
     headToHeadModel.getHeadToHeadFixtures,
     req.query,
     res,
-    'No head-to-head data found for the provided parameters'
+        'No head-to-head data found for the provided parameters'
   );
 
 const getStatisticsFromDb = (req, res) =>
@@ -89,7 +84,7 @@ const getStatisticsFromDb = (req, res) =>
     statisticsModel.getFixtureStatistics,
     req.query,
     res,
-    'No statistics data found for the provided parameters'
+        'No statistics data found for the provided parameters'
   );
 
 const getEventsFromDb = (req, res) =>
@@ -98,7 +93,7 @@ const getEventsFromDb = (req, res) =>
     eventsModel.getFixtureEvents,
     req.query,
     res,
-    'No events data found for the provided parameters'
+        'No events data found for the provided parameters'
   );
 
 const getLineupsFromDb = (req, res) =>
@@ -107,7 +102,7 @@ const getLineupsFromDb = (req, res) =>
     lineupsModel.getFixtureLineups,
     req.query,
     res,
-    'No lineups data found for the provided parameters'
+        'No lineups data found for the provided parameters'
   );
 
 const getPlayersFromDb = (req, res) =>
@@ -116,11 +111,10 @@ const getPlayersFromDb = (req, res) =>
     playersModel.getFixturePlayers,
     req.query,
     res,
-    'No players data found for the provided parameters'
+        'No players data found for the provided parameters'
   );
 
 module.exports = {
-  getRounds,
   getFixtures,
   getTeamHeadToHead,
   getTeamStatistics,

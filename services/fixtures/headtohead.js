@@ -25,6 +25,10 @@ const getHeadToHeadFixtures = async (params) => {
     updatedAt: Date.now(), // Set the updatedAt timestamp
   };
 
+  if (!Array.isArray(groupedData.allHeadToHeadFixtures)) {
+    return { error: "Empty data" };
+  }
+
   // Check if data already exists in MongoDB
   try {
     const existingData = await GroupedHeadToHeadFixture.findOne({
@@ -36,7 +40,7 @@ const getHeadToHeadFixtures = async (params) => {
       const headToHeadFixtureGroup = new GroupedHeadToHeadFixture(groupedData);
       await headToHeadFixtureGroup.save();
       console.log('Data saved successfully');
-    } else {
+    } else if (existingData.updatedAt < new Date(new Date() - 24 * 60 * 60 * 1000)) {
       // Replace the existing data
       await GroupedHeadToHeadFixture.findOneAndReplace(
         { queryParams: params },

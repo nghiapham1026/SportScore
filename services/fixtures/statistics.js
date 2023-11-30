@@ -22,6 +22,10 @@ const getFixtureStatistics = async (params) => {
     updatedAt: Date.now(), // Set the updatedAt timestamp
   };
 
+  if (!Array.isArray(groupedData.allFixtureStatistics)) {
+    return { error: "Empty data" };
+  }
+
   // Save to MongoDB
   try {
     const existingData = await GroupedFixtureStatistics.findOne({
@@ -33,7 +37,7 @@ const getFixtureStatistics = async (params) => {
       const fixtureStatisticsGroup = new GroupedFixtureStatistics(groupedData);
       await fixtureStatisticsGroup.save();
       console.log('Data saved successfully');
-    } else {
+    } else if (existingData.updatedAt < new Date(new Date() - 24 * 60 * 60 * 1000)) {
       // Replace the existing data
       await GroupedFixtureStatistics.findOneAndReplace(
         { queryParams: params },
