@@ -77,10 +77,6 @@ Welcome to the SportScore API! This API provides various endpoints to retrieve f
 
 ### Fixtures
 
-- **Get Fixture Rounds**
-  - Endpoint: `/fixtures/getFixtureRounds`
-  - Description: Retrieve fixture rounds.
-  - Method: `GET`
 - **Get Fixtures**
   - Endpoint: `/fixtures/getFixtures`
   - Description: Retrieve fixtures.

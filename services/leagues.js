@@ -6,8 +6,17 @@ const League = require('../models/leagues'); // Import the schema
 
 const API_ENDPOINT = `${apiUrl}/leagues`;
 
-const getLeagues = async (params) => {
+const getLeagues = async (params, attempts = 0) => {
   const data = await fetchData(API_ENDPOINT, params);
+
+  if (!data.response || data.response.length === 0) {
+    if (attempts < 2) {
+      // 2 here because the first call is attempt 0
+      return getLeagues(params, attempts + 1);
+    } else {
+      return { error: 'Empty data after multiple attempts' };
+    }
+  }
 
   // Process the data into the schema
   const leagueData = data.response.map((item) => ({
@@ -45,7 +54,9 @@ const getLeagues = async (params) => {
       const leagueGroup = new League(groupedData);
       await leagueGroup.save();
       console.log('Data saved successfully');
-    } else {
+    } else if (
+      existingData.updatedAt < new Date(new Date() - 24 * 60 * 60 * 1000)
+    ) {
       // Replace the existing data
       await League.findOneAndReplace(
         {

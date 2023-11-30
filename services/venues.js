@@ -15,9 +15,18 @@ const convertValuesToLowercase = (obj) => {
   return newObj;
 };
 
-const getVenues = async (params) => {
+const getVenues = async (params, attempts = 0) => {
   const lowercasedParams = convertValuesToLowercase(params);
   const data = await fetchData(API_ENDPOINT, lowercasedParams);
+
+  if (!data.response || data.response.length === 0) {
+    if (attempts < 2) {
+      // 2 here because the first call is attempt 0
+      return getVenues(params, attempts + 1);
+    } else {
+      return { error: 'Empty data after multiple attempts' };
+    }
+  }
 
   // Process the data into the schema
   const venueData = data.response.map((item) => ({
@@ -47,7 +56,9 @@ const getVenues = async (params) => {
     if (!existingData) {
       await Venue.create(groupedData);
       console.log('Data saved successfully');
-    } else {
+    } else if (
+      existingData.updatedAt < new Date(new Date() - 24 * 60 * 60 * 1000)
+    ) {
       // Replace the existing data
       await Venue.findOneAndReplace(
         { queryParams: lowercasedParams },

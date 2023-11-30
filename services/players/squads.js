@@ -6,8 +6,17 @@ const { apiUrl } = require('../../utils/constants');
 
 const API_ENDPOINT = `${apiUrl}/players/squads`;
 
-const getSquads = async (params) => {
+const getSquads = async (params, attempts = 0) => {
   const data = await fetchData(API_ENDPOINT, params);
+
+  if (!data.response || data.response.length === 0) {
+    if (attempts < 2) {
+      // 2 here because the first call is attempt 0
+      return getSquads(params, attempts + 1);
+    } else {
+      return { error: 'Empty data after multiple attempts' };
+    }
+  }
 
   const squadData = data.response.map((item) => ({
     team: item.team,
@@ -26,7 +35,9 @@ const getSquads = async (params) => {
     if (!existingData) {
       await Squad.create(groupedData);
       console.log('Data saved successfully');
-    } else {
+    } else if (
+      existingData.updatedAt < new Date(new Date() - 24 * 60 * 60 * 1000)
+    ) {
       await Squad.findOneAndReplace(
         { queryParams: params },
         { ...groupedData, updatedAt: Date.now() } // Update the timestamp

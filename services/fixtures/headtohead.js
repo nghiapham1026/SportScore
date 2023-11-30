@@ -6,8 +6,17 @@ const GroupedHeadToHeadFixture = require('../../models/fixtures/headtohead'); //
 
 const API_ENDPOINT = `${apiUrl}/fixtures/headtohead`;
 
-const getHeadToHeadFixtures = async (params) => {
+const getHeadToHeadFixtures = async (params, attempts = 0) => {
   const data = await fetchData(API_ENDPOINT, params);
+
+  if (!data.response || data.response.length === 0) {
+    if (attempts < 2) {
+      // 2 here because the first call is attempt 0
+      return getHeadToHeadFixtures(params, attempts + 1);
+    } else {
+      return { error: 'Empty data after multiple attempts' };
+    }
+  }
 
   // Process the data into the schema
   const headToHeadFixtureData = data.response.map((item) => ({
@@ -36,7 +45,9 @@ const getHeadToHeadFixtures = async (params) => {
       const headToHeadFixtureGroup = new GroupedHeadToHeadFixture(groupedData);
       await headToHeadFixtureGroup.save();
       console.log('Data saved successfully');
-    } else {
+    } else if (
+      existingData.updatedAt < new Date(new Date() - 24 * 60 * 60 * 1000)
+    ) {
       // Replace the existing data
       await GroupedHeadToHeadFixture.findOneAndReplace(
         { queryParams: params },

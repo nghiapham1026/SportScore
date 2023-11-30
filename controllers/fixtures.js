@@ -16,7 +16,6 @@ const genericHandler = require('../utils/genericHandler');
 const retrieveDataFromDb = require('../utils/retrieveData');
 
 const endpoints = {
-  rounds: fixturesModel.getRounds,
   fixtures: fixturesModel.getFixtures,
   headtohead: headToHeadModel.getHeadToHeadFixtures,
   statistics: statisticsModel.getFixtureStatistics,
@@ -24,10 +23,6 @@ const endpoints = {
   lineups: lineupsModel.getFixtureLineups,
   players: playersModel.getFixturePlayers,
 };
-
-// http://localhost:3000/fixtures/getFixtureRounds?league=39&season=2022
-const getRounds = (req, res) =>
-  genericHandler(endpoints.rounds, req, res, 'Failed to fetch rounds');
 
 // http://localhost:3000/fixtures/getFixtures?date=2023-10-05
 const getFixtures = (req, res) =>
@@ -120,7 +115,6 @@ const getPlayersFromDb = (req, res) =>
   );
 
 module.exports = {
-  getRounds,
   getFixtures,
   getTeamHeadToHead,
   getTeamStatistics,

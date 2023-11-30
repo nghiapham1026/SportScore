@@ -1,14 +1,23 @@
 {
   "env": {
     "browser": true,
-    "es2021": true
+    "es2021": true,
+    "node": true
   },
-  "extends": ["standard", "plugin:prettier/recommended"],
+  "extends": [
+    "standard",
+    "plugin:prettier/recommended"
+  ],
   "parserOptions": {
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
   "rules": {
-    "prettier/prettier": "error"
+    "prettier/prettier": "error",
+    "no-unmodified-loop-condition": "off"
+  },
+  "globals": {
+    "document": "readonly",
+    "window": "readonly"
   }
 }

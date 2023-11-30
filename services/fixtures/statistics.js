@@ -6,8 +6,17 @@ const GroupedFixtureStatistics = require('../../models/fixtures/statistics'); //
 
 const API_ENDPOINT = `${apiUrl}/fixtures/statistics`;
 
-const getFixtureStatistics = async (params) => {
+const getFixtureStatistics = async (params, attempts = 0) => {
   const data = await fetchData(API_ENDPOINT, params);
+
+  if (!data.response || data.response.length === 0) {
+    if (attempts < 2) {
+      // 2 here because the first call is attempt 0
+      return getFixtureStatistics(params, attempts + 1);
+    } else {
+      return { error: 'Empty data after multiple attempts' };
+    }
+  }
 
   // Process the data into the schema
   const fixtureStatisticsData = data.response.map((item) => ({
@@ -33,7 +42,9 @@ const getFixtureStatistics = async (params) => {
       const fixtureStatisticsGroup = new GroupedFixtureStatistics(groupedData);
       await fixtureStatisticsGroup.save();
       console.log('Data saved successfully');
-    } else {
+    } else if (
+      existingData.updatedAt < new Date(new Date() - 24 * 60 * 60 * 1000)
+    ) {
       // Replace the existing data
       await GroupedFixtureStatistics.findOneAndReplace(
         { queryParams: params },
