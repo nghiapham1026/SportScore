@@ -2,11 +2,13 @@ const playersModel = require('../services/players/players');
 const squadsModel = require('../services/players/squads');
 const scorersModel = require('../services/players/scorers');
 const assistsModel = require('../services/players/assists'); // Update path if needed
+const seasonsModel = require('../services/players/seasons');
 
 const Assist = require('../models/players/assists');
 const Scorer = require('../models/players/scorers');
 const Squad = require('../models/players/squads');
 const Player = require('../models/players/players');
+const Seasons = require('../models/players/seasons');
 
 const retrieveDataFromDb = require('../utils/retrieveData');
 const genericHandler = require('../utils/genericHandler');
@@ -16,11 +18,15 @@ const endpoints = {
   squads: squadsModel.getSquads,
   scorers: scorersModel.getTopScorers,
   assists: assistsModel.getAssists,
+  seasons: seasonsModel.getPlayerSeasons,
 };
 
 // http://localhost:3000/players/getPlayers?team=39&season=2022
 const getPlayers = (req, res) =>
   genericHandler(endpoints.players, req, res, 'Failed to fetch players');
+
+const getSeasons = (req, res) =>
+  genericHandler(endpoints.seasons, req, res, 'Failed to fetch player seasons');
 
 // http://localhost:3000/players/getSquads?team=39
 const getSquads = (req, res) =>
@@ -78,13 +84,26 @@ const getTopAssistsFromDb = (req, res) => {
   );
 };
 
+// http://localhost:3000/players/db/getSeasons?player=907
+const getSeasonsFromDb = (req, res) => {
+    retrieveDataFromDb(
+      Seasons,
+      seasonsModel.getPlayerSeasons,
+      req.query,
+      res,
+      'No seasons found for the provided parameters'
+    );
+  };
+
 module.exports = {
   getPlayers,
   getSquads,
   getTopScorers,
   getTopAssists,
+  getSeasons,
   getPlayersFromDb,
   getSquadsFromDb,
   getTopScorersFromDb,
   getTopAssistsFromDb,
+  getSeasonsFromDb,
 };
