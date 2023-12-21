@@ -8,6 +8,7 @@ const API_ENDPOINT = `${apiUrl}/teams/statistics`;
 
 const getTeamStatistics = async (params, attempts = 0) => {
   const data = await fetchData(API_ENDPOINT, params);
+  console.log(data);
 
   if (!data.response || data.response.length === 0) {
     if (attempts < 2) {
