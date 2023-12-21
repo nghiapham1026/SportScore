@@ -75,12 +75,12 @@ const teamStatisticsSchema = new mongoose.Schema(
     },
     biggest: {
       wins: {
-        home: { scored: Number, conceded: Number },
-        away: { scored: Number, conceded: Number },
+        home: String,
+        away: String,
       },
       loses: {
-        home: { scored: Number, conceded: Number },
-        away: { scored: Number, conceded: Number },
+        home: String,
+        away: String,
       },
     },
     clean_sheet: recordSchema,

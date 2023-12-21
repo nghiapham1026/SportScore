@@ -6,11 +6,6 @@ const TeamStatistics = require('../../models/teams/statistics'); // Import the s
 
 const API_ENDPOINT = `${apiUrl}/teams/statistics`;
 
-const transformScore = (score) => {
-  const [scored, conceded] = score.split('-').map(Number);
-  return { scored, conceded };
-};
-
 const getTeamStatistics = async (params, attempts = 0) => {
   const data = await fetchData(API_ENDPOINT, params);
 
@@ -37,12 +32,12 @@ const getTeamStatistics = async (params, attempts = 0) => {
     goals: item.goals,
     biggest: {
       wins: {
-        home: transformScore(item.biggest.wins.home),
-        away: transformScore(item.biggest.wins.away),
+        home: item.biggest.wins.home,
+        away: item.biggest.wins.away,
       },
       loses: {
-        home: transformScore(item.biggest.loses.home),
-        away: transformScore(item.biggest.loses.away),
+        home: item.biggest.loses.home,
+        away: item.biggest.loses.away,
       },
     },
     clean_sheet: item.clean_sheet,
