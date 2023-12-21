@@ -9,6 +9,7 @@ const SEASONS_API_ENDPOINT = `${apiUrl}/teams/seasons`; // Replace with the actu
 // Function to fetch player seasons
 const getTeamSeasons = async (params, attempts = 0) => {
   const data = await fetchData(SEASONS_API_ENDPOINT, params);
+  console.log(data);
 
   if (!data.response || data.response.length === 0) {
     if (attempts < 2) {
