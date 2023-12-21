@@ -57,7 +57,7 @@ const getTeamStatisticsFromDb = (req, res) => {
 const getTeamSeasonsFromDb = (req, res) => {
     retrieveDataFromDb(
       Seasons,
-      teamsStats.getTeamSeasons,
+      teamSeasons.getTeamSeasons,
       req.query,
       res,
       'No team seasons found for the provided parameters'
