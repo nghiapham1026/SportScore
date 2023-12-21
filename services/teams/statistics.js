@@ -15,6 +15,7 @@ const getTeamStatistics = async (params, attempts = 0) => {
       // 2 here because the first call is attempt 0
       return getTeamStatistics(params, attempts + 1);
     } else {
+        console.log(data);
       return { error: 'Empty data after multiple attempts' };
     }
   }
