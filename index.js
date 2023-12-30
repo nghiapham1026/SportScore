@@ -15,6 +15,7 @@ const venuesRoutes = require('./routes/venues');
 const standingsRoutes = require('./routes/standings');
 const fixturesRoutes = require('./routes/fixtures');
 const playersRoutes = require('./routes/players');
+const predictionsRoutes = require('./routes/predictions');
 
 // Connect to the database
 mongoose
@@ -29,12 +30,7 @@ app.use('/venues', venuesRoutes);
 app.use('/standings', standingsRoutes);
 app.use('/fixtures', fixturesRoutes);
 app.use('/players', playersRoutes);
-
-// Health check endpoint
-app.get('/healthcheck', (_, res) => {
-    // Perform necessary health checks here
-    res.status(200).send('Server is healthy');
-});
+app.use('/predictions', predictionsRoutes);
 
 // Home route
 app.get('/', (_, res) => {
