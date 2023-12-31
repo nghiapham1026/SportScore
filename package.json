@@ -22,7 +22,8 @@
     "mongoose": "^7.6.1",
     "node-cache": "^5.1.2",
     "node-cron": "^3.0.2",
-    "parse-server": "^6.3.0"
+    "parse-server": "^6.3.0",
+    "puppeteer": "^21.6.1"
   },
   "devDependencies": {
     "eslint": "^8.50.0",

@@ -16,6 +16,7 @@ const standingsRoutes = require('./routes/standings');
 const fixturesRoutes = require('./routes/fixtures');
 const playersRoutes = require('./routes/players');
 const predictionsRoutes = require('./routes/predictions');
+const newsRoutes = require('./routes/news');
 
 // Connect to the database
 mongoose
@@ -31,25 +32,16 @@ app.use('/standings', standingsRoutes);
 app.use('/fixtures', fixturesRoutes);
 app.use('/players', playersRoutes);
 app.use('/predictions', predictionsRoutes);
+app.use('/news', newsRoutes);
 
 // Home route
 app.get('/', (_, res) => {
-  res.send('SportScore back-end server, view manual for a list of all endpoints');
-});
-
-// Schedule a task to run every day at 8:00 AM
-cron.schedule('0 0 * * *', async () => {
-    try {
-        // Replace with your server's health check endpoint
-        const response = await axios.get(`${process.env.SERVER_URL}/healthcheck`);
-        console.log('Daily health check successful:', response.status);
-    } catch (err) {
-        console.error('Error during daily health check:', err);
-    }
+  res.send(
+    'SportScore back-end server, view manual for a list of all endpoints'
+  );
 });
 
 // Start the server
 app.listen(process.env.PORT || 3000, () => {
-    console.log(`Server is running`);
+  console.log(`Server is running`);
 });
-  

@@ -122,16 +122,18 @@ const h2hSchema = new mongoose.Schema({
 // Main schema
 const predictionSchema = new mongoose.Schema({
   queryParams: mongoose.Schema.Types.Mixed,
-  allPredictions: [{
-    predictions: predictionsSchema,
-    league: leagueSchema,
-    teams: {
-      home: teamSchema,
-      away: teamSchema,
+  allPredictions: [
+    {
+      predictions: predictionsSchema,
+      league: leagueSchema,
+      teams: {
+        home: teamSchema,
+        away: teamSchema,
+      },
+      comparison: comparisonSchema,
+      h2h: [h2hSchema],
     },
-    comparison: comparisonSchema,
-    h2h: [h2hSchema],
-  }],
+  ],
   updatedAt: {
     type: Date,
     default: Date.now,

@@ -55,14 +55,14 @@ const getTeamStatisticsFromDb = (req, res) => {
 };
 
 const getTeamSeasonsFromDb = (req, res) => {
-    retrieveDataFromDb(
-      Seasons,
-      teamSeasons.getTeamSeasons,
-      req.query,
-      res,
-      'No team seasons found for the provided parameters'
-    );
-  };
+  retrieveDataFromDb(
+    Seasons,
+    teamSeasons.getTeamSeasons,
+    req.query,
+    res,
+    'No team seasons found for the provided parameters'
+  );
+};
 
 module.exports = {
   getTeams,

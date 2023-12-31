@@ -23,7 +23,7 @@ const getTeamSeasons = async (params, attempts = 0) => {
   // Create the document for the database
   const teamSeasonsData = {
     queryParams: params,
-    seasons: data.response.map(year => ({ year: year })), // Map the array of years to seasonSchema format
+    seasons: data.response.map((year) => ({ year: year })), // Map the array of years to seasonSchema format
     updatedAt: Date.now(),
   };
 
@@ -34,12 +34,11 @@ const getTeamSeasons = async (params, attempts = 0) => {
       // If no existing data, create a new document
       await Seasons.create(teamSeasonsData);
       console.log('Season data saved successfully for player ID:', params);
-    } else if (existingData.updatedAt < new Date(new Date() - 24 * 60 * 60 * 1000)) {
+    } else if (
+      existingData.updatedAt < new Date(new Date() - 24 * 60 * 60 * 1000)
+    ) {
       // Update existing document if it's older than 24 hours
-      await Seasons.findOneAndReplace(
-        { queryParams: params },
-        teamSeasonsData
-      );
+      await Seasons.findOneAndReplace({ queryParams: params }, teamSeasonsData);
       console.log('Season data updated for player ID:', params);
     }
   } catch (error) {

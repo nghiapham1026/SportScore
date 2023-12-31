@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 // Season Schema
 const seasonSchema = new mongoose.Schema({
-  year: Number
+  year: Number,
 });
 
 // PlayerSeasons Schema (to store all seasons associated with a player, if needed)
@@ -11,11 +11,12 @@ const teamSeasonsSchema = new mongoose.Schema({
   seasons: [seasonSchema], // Array of season years
   updatedAt: {
     type: Date,
-    default: Date.now
+    default: Date.now,
   },
 });
 
 // If you want to store a list of seasons for each player
-const Seasons = mongoose.models.Seasons || mongoose.model('TeamSeasons', teamSeasonsSchema);
+const Seasons =
+  mongoose.models.Seasons || mongoose.model('TeamSeasons', teamSeasonsSchema);
 
 module.exports = Seasons;

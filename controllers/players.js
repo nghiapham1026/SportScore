@@ -86,14 +86,14 @@ const getTopAssistsFromDb = (req, res) => {
 
 // http://localhost:3000/players/db/getSeasons?player=907
 const getSeasonsFromDb = (req, res) => {
-    retrieveDataFromDb(
-      Seasons,
-      seasonsModel.getPlayerSeasons,
-      req.query,
-      res,
-      'No seasons found for the provided parameters'
-    );
-  };
+  retrieveDataFromDb(
+    Seasons,
+    seasonsModel.getPlayerSeasons,
+    req.query,
+    res,
+    'No seasons found for the provided parameters'
+  );
+};
 
 module.exports = {
   getPlayers,

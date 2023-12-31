@@ -5,17 +5,12 @@ const genericHandler = require('../utils/genericHandler');
 const retrieveDataFromDb = require('../utils/retrieveData');
 
 const endpoint = {
-    predictions: predictionsModel.getPredictions,
+  predictions: predictionsModel.getPredictions,
 };
 
 // Define the endpoint function for getting predictions
 const getPredictions = (req, res) =>
-  genericHandler(
-    endpoint.predictions,
-    req,
-    res,
-    'Failed to fetch predictions'
-  );
+  genericHandler(endpoint.predictions, req, res, 'Failed to fetch predictions');
 
 // Define the function for getting predictions from the database
 const getPredictionsFromDb = (req, res) =>
