@@ -6,19 +6,16 @@ const TeamStatistics = require('../../models/teams/statistics'); // Import the s
 
 const API_ENDPOINT = `${apiUrl}/teams/statistics`;
 
-const transformScore = (score) => {
-  const [scored, conceded] = score.split('-').map(Number);
-  return { scored, conceded };
-};
-
 const getTeamStatistics = async (params, attempts = 0) => {
   const data = await fetchData(API_ENDPOINT, params);
+  console.log(data);
 
   if (!data.response || data.response.length === 0) {
     if (attempts < 2) {
       // 2 here because the first call is attempt 0
       return getTeamStatistics(params, attempts + 1);
     } else {
+      console.log(data);
       return { error: 'Empty data after multiple attempts' };
     }
   }
@@ -37,12 +34,12 @@ const getTeamStatistics = async (params, attempts = 0) => {
     goals: item.goals,
     biggest: {
       wins: {
-        home: transformScore(item.biggest.wins.home),
-        away: transformScore(item.biggest.wins.away),
+        home: item.biggest.wins.home,
+        away: item.biggest.wins.away,
       },
       loses: {
-        home: transformScore(item.biggest.loses.home),
-        away: transformScore(item.biggest.loses.away),
+        home: item.biggest.loses.home,
+        away: item.biggest.loses.away,
       },
     },
     clean_sheet: item.clean_sheet,

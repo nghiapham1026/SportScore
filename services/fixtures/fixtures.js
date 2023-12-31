@@ -21,9 +21,7 @@ const getFixtures = async (params, attempts = 0) => {
   // Filter data based on the league IDs
   const filteredData = data.response.filter((item) =>
     [
-      39, 140, 135, 78, 61, 2, 3, 848, 143, 45, 48, 528, 556, 81, 529, 531, 547,
-      137, 22, 37, 66, 5, 4, 32, 960, 253, 772, 257, 536, 16, 536, 307, 17, 1,
-      29, 30, 31, 32, 33, 34, 340,
+      4, 61, 39, 78, 135, 140, 1, 2, 66, 81, 45, 48, 253, 3, 137, 143, 848,
     ].includes(item.league.id)
   );
 

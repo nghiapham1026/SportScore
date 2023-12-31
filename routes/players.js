@@ -14,4 +14,7 @@ router.get('/db/getTopScorers', playersController.getTopScorersFromDb);
 router.get('/getTopAssists', playersController.getTopAssists);
 router.get('/db/getTopAssists', playersController.getTopAssistsFromDb);
 
+router.get('/getSeasons', playersController.getSeasons);
+router.get('/db/GetSeasons', playersController.getSeasonsFromDb);
+
 module.exports = router;
