@@ -1,8 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-const cron = require('node-cron');
-const axios = require('axios');
 require('dotenv').config();
 
 const app = express();
