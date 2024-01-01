@@ -22,7 +22,7 @@ const getPlayerSeasons = async (params, attempts = 0) => {
   // Create the document for the database
   const playerSeasonsData = {
     queryParams: params,
-    seasons: data.response.map((year) => ({ year: year })), // Map the array of years to seasonSchema format
+    seasons: data.response.map((year) => ({ year })), // Map the array of years to seasonSchema format
     updatedAt: Date.now(),
   };
 

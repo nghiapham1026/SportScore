@@ -3,7 +3,7 @@ const { newsUrl } = require('../utils/constants');
 const News = require('../models/news');
 
 async function scrapeNews() {
-    const browser = await puppeteer.launch( { args: ['--no-sandbox'] } );
+  const browser = await puppeteer.launch({ args: ['--no-sandbox'] });
   const page = await browser.newPage();
   let scrapedArticleCount = 0;
 
@@ -31,7 +31,7 @@ async function scrapeNews() {
 
   const allNews = [];
   for (const link of articles) {
-    if (scrapedArticleCount >= 3) break; // Limit to 5 articles
+    if (scrapedArticleCount >= 2) break; // Limit to 2 articles
 
     // Check if article already exists in the database
     const existingArticle = await News.findOne({ link });
