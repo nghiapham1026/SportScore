@@ -2,7 +2,7 @@ const leaguesModel = require('../services/leagues');
 const League = require('../models/leagues'); // Import the schema
 
 const genericHandler = require('../utils/genericHandler');
-const retrieveDataFromDb = require('../utils/retrieveData');
+const { retrieveDataFromDb } = require('../utils/retrieveData');
 
 const endpoints = {
   leagues: leaguesModel.getLeagues,

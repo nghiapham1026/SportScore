@@ -10,7 +10,7 @@ const Squad = require('../models/players/squads');
 const Player = require('../models/players/players');
 const Seasons = require('../models/players/seasons');
 
-const retrieveDataFromDb = require('../utils/retrieveData');
+const { retrieveDataFromDb } = require('../utils/retrieveData');
 const genericHandler = require('../utils/genericHandler');
 
 const endpoints = {

@@ -2,7 +2,7 @@ const predictionsModel = require('../services/predictions');
 const GroupedPredictions = require('../models/predictions');
 
 const genericHandler = require('../utils/genericHandler');
-const retrieveDataFromDb = require('../utils/retrieveData');
+const { retrieveDataFromDb } = require('../utils/retrieveData');
 
 const endpoint = {
   predictions: predictionsModel.getPredictions,

@@ -6,7 +6,7 @@ const Team = require('../models/teams/teams'); // Import the schema
 const TeamStatistics = require('../models/teams/statistics'); // Import the schema
 const Seasons = require('../models/teams/seasons');
 
-const retrieveDataFromDb = require('../utils/retrieveData');
+const { retrieveDataFromDb } = require('../utils/retrieveData');
 const genericHandler = require('../utils/genericHandler');
 
 const endpoints = {

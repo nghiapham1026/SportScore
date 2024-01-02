@@ -1,6 +1,7 @@
 const NewsData = require('../models/news');
-// Assuming webScrape is a module you've created for scraping news articles
 const webScrape = require('./scrapeController');
+const { retrieveLatestNews } = require('../utils/retrieveData'); // Import the retrieveData module
+const cache = require('../utils/cache'); // Import the cache module
 
 exports.createNews = (req, res) => {
   // Create a new instance of NewsData with data from the request body
@@ -84,6 +85,28 @@ exports.saveNews = async (_, res) => {
   } catch (err) {
     res.status(500).json({
       message: 'Failed to fetch and save news articles',
+      error: err.message,
+    });
+  }
+};
+
+exports.getLatestNews = async (_, res) => {
+  try {
+    const cacheKey = 'latestNews';
+    let latestNews = cache.get(cacheKey);
+
+    if (!latestNews) {
+      latestNews = await retrieveLatestNews();
+      cache.set(cacheKey, latestNews); // Cache the latest news
+    }
+
+    res.status(200).json({
+      message: 'Latest news articles retrieved successfully',
+      articles: latestNews,
+    });
+  } catch (err) {
+    res.status(500).json({
+      message: 'Failed to retrieve latest news articles',
       error: err.message,
     });
   }

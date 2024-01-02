@@ -1,7 +1,7 @@
 const standingsModel = require('../services/standings');
 const Standing = require('../models/standings'); // Import the schema
 
-const retrieveDataFromDb = require('../utils/retrieveData');
+const { retrieveDataFromDb } = require('../utils/retrieveData');
 const genericHandler = require('../utils/genericHandler');
 
 const endpoints = {
