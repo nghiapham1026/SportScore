@@ -91,23 +91,19 @@ exports.saveNews = async (_, res) => {
 };
 
 exports.getLatestNews = async (_, res) => {
-  try {
-    const cacheKey = 'latestNews';
-    let latestNews = cache.get(cacheKey);
-
-    if (!latestNews) {
-      latestNews = await retrieveLatestNews();
-      cache.set(cacheKey, latestNews); // Cache the latest news
+    try {
+      // Retrieve the latest news directly without checking the cache
+      const latestNews = await retrieveLatestNews();
+  
+      res.status(200).json({
+        message: 'Latest news articles retrieved successfully',
+        articles: latestNews,
+      });
+    } catch (err) {
+      res.status(500).json({
+        message: 'Failed to retrieve latest news articles',
+        error: err.message,
+      });
     }
-
-    res.status(200).json({
-      message: 'Latest news articles retrieved successfully',
-      articles: latestNews,
-    });
-  } catch (err) {
-    res.status(500).json({
-      message: 'Failed to retrieve latest news articles',
-      error: err.message,
-    });
-  }
-};
+  };
+  

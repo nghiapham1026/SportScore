@@ -40,6 +40,6 @@ app.get('/', (_, res) => {
 });
 
 // Start the server
-app.listen(process.env.PORT || 3000, () => {
-  console.log(`Server is running`);
+app.listen(process.env.PORT || 8080, () => {
+  console.log(`Server is running at port ${process.env.PORT || 8080}`);
 });
