@@ -68,7 +68,7 @@ const retrieveLatestNews = async () => {
       // Query the database for the latest 5 news articles, sorted by date
       const latestNews = await News.find({})
         .sort({ date: -1 }) // Assuming 'date' field holds ISO date string
-        .limit(5);
+        .limit(10);
   
       return latestNews;
     } catch (err) {
